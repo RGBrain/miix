@@ -48,6 +48,19 @@ function App() {
     setArtists(data.artists.items);
   };
 
+  // Thinking about API call get user top 20 tracks
+  // const getTopTracks = async (e) => {
+  //   e.preventDefault();
+  //   const { data } = await axios.get(
+  //     "https://api.spotify.com/v1/me/top/tracks",
+  //     {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //       params: { time_range: "short-term", limit: 20 },
+  //     }
+  //   );
+  //   console.log(data);
+  // };
+
   const renderArtists = () => {
     return artists.map((artist) => (
       <div key={artist.id}>
