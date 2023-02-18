@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
@@ -7,12 +7,14 @@ import "./App.css";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  //const redirectURI = "http://localhost:3000";
+  //Uncomment before deploying
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
 
   const [token, setToken] = useState("");
-  const [searchKey, setSearchKey] = useState("");
+  const [/*searchKey, */ setSearchKey] = useState("");
   const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
@@ -67,7 +69,7 @@ function App() {
         <h4>{item.name}</h4>
         <h5>{item.artists[0].name}</h5>
         <button>
-          <a href={`${item.preview_url}`} target="_blank">
+          <a href={`${item.preview_url}`} target="_blank" rel="noreferrer">
             <FontAwesomeIcon icon={faSpotify} />
           </a>
         </button>
