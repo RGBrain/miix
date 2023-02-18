@@ -13,7 +13,7 @@ function App() {
 
   const [token, setToken] = useState("");
   const [searchKey, setSearchKey] = useState("");
-  const [artists, setArtists] = useState([]);
+  const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -37,39 +37,40 @@ function App() {
     window.localStorage.removeItem("token");
   };
 
-  const searchArtists = async (e) => {
-    e.preventDefault();
-    const { data } = await axios.get("https://api.spotify.com/v1/search", {
-      headers: { Authorization: `Bearer ${token}` },
-      params: { q: searchKey, type: "artist" },
-    });
-
-    console.log(data);
-    setArtists(data.artists.items);
-  };
-
-  // Thinking about API call get user top 20 tracks
-  // const getTopTracks = async (e) => {
+  // const searchArtists = async (e) => {
   //   e.preventDefault();
-  //   const { data } = await axios.get(
-  //     "https://api.spotify.com/v1/me/top/tracks",
-  //     {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //       params: { time_range: "short-term", limit: 20 },
-  //     }
-  //   );
+  //   const { data } = await axios.get("https://api.spotify.com/v1/search", {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //     params: { q: searchKey, type: "artist" },
+  //   });
+
   //   console.log(data);
+
   // };
 
-  const renderArtists = () => {
-    return artists.map((artist) => (
-      <div key={artist.id}>
-        {artist.images.length ? (
-          <img width={"100%"} src={artist.images[0].url} alt="" />
-        ) : (
-          <div>No image</div>
-        )}
-        {artist.name}
+  // Making API call to get user top 50 tracks
+  const getTopTracks = async (e) => {
+    e.preventDefault();
+    const { data } = await axios.get(
+      "https://api.spotify.com/v1/me/top/tracks",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log(data);
+    setTracks(data.items);
+  };
+
+  const renderTracks = () => {
+    return tracks.map((item) => (
+      <div key={item.id}>
+        <h4>{item.name}</h4>
+        <h5>{item.artists[0].name}</h5>
+        <button>
+          <a href={`${item.preview_url}`} target="_blank">
+            <FontAwesomeIcon icon={faSpotify} />
+          </a>
+        </button>
       </div>
     ));
   };
@@ -81,7 +82,7 @@ function App() {
         <FontAwesomeIcon icon={faSpotify} />
         {!token ? (
           <a
-            href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}`}
+            href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=user-top-read`}
           >
             Spotify login
           </a>
@@ -90,14 +91,19 @@ function App() {
         )}
 
         {token ? (
-          <form onSubmit={searchArtists}>
-            <input type="text" onChange={(e) => setSearchKey(e.target.value)} />
-            <button type={"submit"}>Search</button>
+          <form onSubmit={getTopTracks}>
+            <button
+              type={"submit"}
+              onClick={(e) => setSearchKey(e.target.value)}
+            >
+              Get tracks
+            </button>
           </form>
         ) : (
           <h2>Please login</h2>
         )}
-        {renderArtists()}
+
+        {renderTracks()}
       </header>
     </div>
   );
