@@ -7,11 +7,12 @@ import "./App.css";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  //const redirectURI = "http://localhost:3000";
+  const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  // const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
+  const scope = "user-top-read";
 
   const [token, setToken] = useState("");
   const [/*searchKey, */ setSearchKey] = useState("");
@@ -65,7 +66,7 @@ function App() {
 
   const renderTracks = () => {
     return tracks.map((item) => (
-      <div key={item.id}>
+      <div key={item.id} className="tracks-container">
         <h4>{item.name}</h4>
         <h5>{item.artists[0].name}</h5>
         <button>
@@ -84,7 +85,7 @@ function App() {
         <FontAwesomeIcon icon={faSpotify} />
         {!token ? (
           <a
-            href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=user-top-read`}
+            href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
           >
             Spotify login
           </a>
@@ -96,7 +97,7 @@ function App() {
           <form onSubmit={getTopTracks}>
             <button
               type={"submit"}
-              onClick={(e) => setSearchKey(e.target.value)}
+              // onClick={(e) => setSearchKey(e.target.value)}
             >
               Get tracks
             </button>
