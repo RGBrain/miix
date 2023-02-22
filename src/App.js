@@ -8,9 +8,9 @@ import "./App.css";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  // const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  // const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read";
@@ -66,7 +66,7 @@ function App() {
     setTracks(data.items);
     addSongs(data.items);
   };
-  
+
   const addSongs = (newSongs) => {
     let newSongsId = newSongs.map((song) => song.id);
     let playlist = getPlaylist();
@@ -78,11 +78,13 @@ function App() {
 
   // Check for unique values and add to song array
   const removeDuplicateTracks = (playlist) => {
-    let uniqueTracks = playlist.filter((value, index, array) => array.indexOf(value) === index);
+    let uniqueTracks = playlist.filter(
+      (value, index, array) => array.indexOf(value) === index
+    );
     // console.log("unique: " + uniqueTracks)
     setPlaylist(uniqueTracks);
     return playlist;
-}
+  };
 
   function getPlaylist() {
     let playlist = JSON.parse(localStorage.getItem("playlist"));
@@ -122,7 +124,7 @@ function App() {
 
   return (
     <div className="App">
-        {/* <Navbar /> */}
+      {/* <Navbar /> */}
       <header className="Miix-header">
         <h1>Miix</h1>
         <FontAwesomeIcon icon={faSpotify} />
