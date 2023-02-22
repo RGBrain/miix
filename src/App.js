@@ -15,8 +15,9 @@ function App() {
   const scope = "user-top-read";
 
   const [token, setToken] = useState("");
-  const [/*searchKey, */ setSearchKey] = useState("");
+  const [searchKey, setSearchKey] = useState("");
   const [tracks, setTracks] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -62,6 +63,36 @@ function App() {
     );
     console.log(data);
     setTracks(data.items);
+    addSongs(data.items);
+  };
+
+  const addSongs = (newSongs) => {
+    let playlist = getPlaylist();
+    let newPlaylist = playlist.concat(newSongs);
+    setPlaylist(newPlaylist);
+    savePlaylist(newPlaylist);
+  };
+
+  function getPlaylist() {
+    let playlist = JSON.parse(localStorage.getItem("playlist"));
+    if (playlist) {
+      return playlist;
+    } else {
+      return [];
+    }
+  }
+
+  function savePlaylist(playlist) {
+    localStorage.setItem("playlist", JSON.stringify(playlist));
+  }
+
+  const renderPlaylist = () => {
+    console.log(playlist);
+    // return playlist.map((song) => (
+    //   <div key={song.id} className="playlist">
+    //     <p>{song.id}</p>
+    //   </div>
+    // ));
   };
 
   const renderTracks = () => {
@@ -95,18 +126,14 @@ function App() {
 
         {token ? (
           <form onSubmit={getTopTracks}>
-            <button
-              type={"submit"}
-              // onClick={(e) => setSearchKey(e.target.value)}
-            >
-              Get tracks
-            </button>
+            <button type={"submit"}>Get tracks</button>
           </form>
         ) : (
           <h2>Please login</h2>
         )}
 
         {renderTracks()}
+        {renderPlaylist()}
       </header>
     </div>
   );
