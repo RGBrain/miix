@@ -67,8 +67,9 @@ function App() {
   };
 
   const addSongs = (newSongs) => {
+    let newSongsId = newSongs.map((song) => song.id);
     let playlist = getPlaylist();
-    let newPlaylist = playlist.concat(newSongs);
+    let newPlaylist = playlist.concat(newSongsId);
     setPlaylist(newPlaylist);
     savePlaylist(newPlaylist);
   };
