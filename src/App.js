@@ -8,15 +8,17 @@ import "./App.css";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  // const redirectURI = "http://localhost:3000";
+  const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  // const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read";
 
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
+  const [seedTracks, setSeedTracks] = useState([]);
+  const [recommendedTracks, setRecommendedTracks] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -40,17 +42,6 @@ function App() {
     window.localStorage.removeItem("token");
   };
 
-  // const searchArtists = async (e) => {
-  //   e.preventDefault();
-  //   const { data } = await axios.get("https://api.spotify.com/v1/search", {
-  //     headers: { Authorization: `Bearer ${token}` },
-  //     params: { q: searchKey, type: "artist" },
-  //   });
-
-  //   console.log(data);
-
-  // };
-
   // Making API call to get user top 50 tracks
   const getTopTracks = async (e) => {
     e.preventDefault();
@@ -61,8 +52,27 @@ function App() {
       }
     );
     console.log(data);
-    //setTracks(data.items);
     addSongs(data.items);
+    getRecommendations();
+  };
+
+  // Making API call to get recommendations based on seed tracks
+  const getRecommendations = async (e) => {
+    const playlist = getPlaylist();
+    const playlistIDs = playlist
+      .slice(0, 5)
+      .map((song) => song.id)
+      .join(",");
+    console.log(playlistIDs);
+    const { data } = await axios.get(
+      "https://api.spotify.com/v1/recommendations",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { seed_tracks: playlistIDs, limit: 10 },
+      }
+    );
+    console.log(data);
+    setRecommendedTracks(data.tracks);
   };
 
   // Adding songs to playlist based on user top tracks
