@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
-// import Navbar from "./components/Navbar";
+
+import Navigation from "./components/Navbar";
 
 import "./App.css";
+import { Navbar } from "react-bootstrap";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
@@ -124,7 +126,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Navbar /> */}
+
+      <Navigation />
+
       <header className="Miix-header">
         <h1>Miix</h1>
         <FontAwesomeIcon icon={faSpotify} />
