@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
-// import Navbar from "./components/Navbar";
+
+import Navigation from "./components/Navbar";
+// import { Navbar } from "react-bootstrap";
 
 import "./App.css";
+import shuffleArray from "./utils/shuffleArray";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
@@ -59,16 +62,16 @@ function App() {
   // Making API call to get recommendations based on seed tracks
   const getRecommendations = async (e) => {
     const playlist = getPlaylist();
-    const playlistIDs = playlist
-      .slice(0, 5)
-      .map((song) => song.id)
-      .join(",");
-    console.log(playlistIDs);
+    const playlistIDs = playlist.map((song) => song.id);
+    const shuffledPlaylist = shuffleArray(playlistIDs);
+    console.log(shuffledPlaylist);
+    const shuffledPlaylistSeeds = shuffledPlaylist.slice(0, 5).join(",");
+
     const { data } = await axios.get(
       "https://api.spotify.com/v1/recommendations",
       {
         headers: { Authorization: `Bearer ${token}` },
-        params: { seed_tracks: playlistIDs, limit: 10 },
+        params: { seed_tracks: shuffledPlaylistSeeds, limit: 10 },
       }
     );
     console.log(data);
