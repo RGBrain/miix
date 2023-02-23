@@ -20,8 +20,8 @@ function App() {
 
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
-  const [seedTracks, setSeedTracks] = useState([]);
-  const [recommendedTracks, setRecommendedTracks] = useState([]);
+  // const [seedTracks, setSeedTracks] = useState([]);
+  // const [recommendedTracks, setRecommendedTracks] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -75,7 +75,19 @@ function App() {
       }
     );
     console.log(data);
-    setRecommendedTracks(data.tracks);
+    setPlaylist(mapSongs(data.tracks));
+  };
+
+  const mapSongs = (songs) => {
+    return songs.map((song) => {
+      return {
+        id: song.id,
+        name: song.name,
+        artist: song.artists[0].name,
+        imageURL: song.album.images[0].url,
+        songURL: song.external_urls.spotify,
+      };
+    });
   };
 
   // Adding songs to playlist based on user top tracks
@@ -86,23 +98,12 @@ function App() {
     console.log("songs");
     console.log(songs);
 
-    const songsNotInPlaylist = songs
-      .map((song) => {
-        return {
-          id: song.id,
-          name: song.name,
-          artist: song.artists[0].name,
-          imageURL: song.album.images[0].url,
-          songURL: song.external_urls.spotify,
-        };
-      })
-      .filter((song) => {
-        return (
-          currentPlaylist.find(
-            (existingSong) => song.id === existingSong.id
-          ) === undefined
-        );
-      });
+    const songsNotInPlaylist = mapSongs(songs).filter((song) => {
+      return (
+        currentPlaylist.find((existingSong) => song.id === existingSong.id) ===
+        undefined
+      );
+    });
 
     console.log("songsNotInPlaylist");
     console.log(songsNotInPlaylist);
