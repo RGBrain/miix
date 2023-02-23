@@ -1,7 +1,4 @@
 .navItems {
     color: black !important;
+    justify-items: end;
 };
-
-.myNavbar {
-    color: green !important;
-}

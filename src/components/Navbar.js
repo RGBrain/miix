@@ -20,7 +20,7 @@ function Navigation() {
           </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto" id="help">
             <Nav.Link className="navItems" href="#home">How it works</Nav.Link>
             <Nav.Link className="navItems" href="#link">Login</Nav.Link>
             <Nav.Link className="navItems" href="#link">Player</Nav.Link>
