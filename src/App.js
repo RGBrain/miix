@@ -8,6 +8,9 @@ import Navigation from "./components/Navbar";
 
 import "./App.css";
 import shuffleArray from "./utils/shuffleArray";
+import mapSongs from "./utils/mapSongs";
+import getPlaylist from "./utils/getPlaylist";
+import savePlaylist from "./utils/savePlaylist";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
@@ -20,8 +23,6 @@ function App() {
 
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
-  // const [seedTracks, setSeedTracks] = useState([]);
-  // const [recommendedTracks, setRecommendedTracks] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -59,12 +60,12 @@ function App() {
     getRecommendations();
   };
 
-  // Making API call to get recommendations based on seed tracks
+  // Making API call to get recommended tracks based on seed tracks from users
   const getRecommendations = async (e) => {
     const playlist = getPlaylist();
     const playlistIDs = playlist.map((song) => song.id);
+    // Shuffling playlist ID array to ensure the seeds are taken from a mixture of songs
     const shuffledPlaylist = shuffleArray(playlistIDs);
-    console.log(shuffledPlaylist);
     const shuffledPlaylistSeeds = shuffledPlaylist.slice(0, 5).join(",");
 
     const { data } = await axios.get(
@@ -78,19 +79,7 @@ function App() {
     setPlaylist(mapSongs(data.tracks));
   };
 
-  const mapSongs = (songs) => {
-    return songs.map((song) => {
-      return {
-        id: song.id,
-        name: song.name,
-        artist: song.artists[0].name,
-        imageURL: song.album.images[0].url,
-        songURL: song.external_urls.spotify,
-      };
-    });
-  };
-
-  // Adding songs to playlist based on user top tracks
+  // Adding songs to playlist from other users and ensuring duplicates are removed
   const addSongs = (songs) => {
     let currentPlaylist = getPlaylist();
     console.log("currentPlaylist");
@@ -116,33 +105,18 @@ function App() {
     savePlaylist(newPlaylist);
   };
 
-  function getPlaylist() {
-    let playlist = JSON.parse(localStorage.getItem("playlist"));
-    if (playlist) {
-      return playlist;
-    } else {
-      return [];
-    }
-  }
-
-  function savePlaylist(playlist) {
-    localStorage.setItem("playlist", JSON.stringify(playlist));
-  }
-
-  const renderPlaylist = () => {
-    //console.log(playlist);
-  };
+  // function savePlaylist(playlist) {
+  //   localStorage.setItem("playlist", JSON.stringify(playlist));
+  // }
 
   const renderTracks = () => {
     return playlist.map((item) => (
       <div key={item.id} className="tracks-container">
         <h4>{item.name}</h4>
         <h5>{item.artist}</h5>
-        {/* <h5>{item.artists[0].name}</h5> */}
         <img src={item.imageURL} width="100" />
         <button>
           <a href={`${item.songURL}`} target="_blank" rel="noreferrer">
-            {/* <a href={`${item.preview_url}`} target="_blank" rel="noreferrer"> */}
             <FontAwesomeIcon icon={faSpotify} />
           </a>
         </button>
@@ -175,7 +149,6 @@ function App() {
         )}
 
         {renderTracks()}
-        {renderPlaylist()}
       </header>
     </div>
   );
