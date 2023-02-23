@@ -4,6 +4,7 @@ import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 
 import Navigation from "./components/Navbar";
+
 // import { Navbar } from "react-bootstrap";
 
 import "./App.css";
@@ -11,6 +12,7 @@ import shuffleArray from "./utils/shuffleArray";
 import mapSongs from "./utils/mapSongs";
 import getPlaylist from "./utils/getPlaylist";
 import savePlaylist from "./utils/savePlaylist";
+
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
@@ -126,7 +128,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Navbar /> */}
+
+      <Navigation />
+
       <header className="Miix-header">
         <h1>Miix</h1>
         <FontAwesomeIcon icon={faSpotify} />
