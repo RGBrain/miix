@@ -10,7 +10,14 @@ function Navigation() {
     return (
       <Navbar className="myNavbar" expand="lg">
       <Container>
-        <Navbar.Brand href={logo}></Navbar.Brand>
+      <Navbar.Brand href="#home">
+            <img
+              src={logo}
+              width="150"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+          </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
