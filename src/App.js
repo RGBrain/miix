@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import Navigation from "./components/Navbar";
-
+import Hero from "./components/Hero";
 import "./App.css";
-import { Navbar } from "react-bootstrap";
+
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
@@ -115,6 +115,7 @@ function App() {
   return (
     <div className="App">
       <Navigation />
+      <Hero />
       <header className="Miix-header">
         <h1>Miix</h1>
         <FontAwesomeIcon icon={faSpotify} />
