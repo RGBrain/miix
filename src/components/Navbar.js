@@ -1,25 +1,28 @@
 import React from "react";
+import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import './styles/Navbar.css';
+import logo from './assets/Miix-black.png';
 
-function Navbar() {
+
+function Navigation() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar className="myNavbar" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href={logo}></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="justify-content-center">
-            <Nav.Item>
-              <Nav.Link eventKey="link-1">How it works</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-2">Log in</Nav.Link>
-            </Nav.Item>
+          <Nav className="me-auto">
+            <Nav.Link className="navItems" href="#home">How it works</Nav.Link>
+            <Nav.Link className="navItems" href="#link">Login</Nav.Link>
+            <Nav.Link className="navItems" href="#link">Player</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
     )
 }
 
-export default Navbar;
+export default Navigation;
