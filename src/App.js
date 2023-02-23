@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
+
 import Navigation from "./components/Navbar";
 
 import "./App.css";
@@ -9,7 +10,7 @@ import { Navbar } from "react-bootstrap";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  //const redirectURI = "http://localhost:3000";
+  // const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
   const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
@@ -74,6 +75,17 @@ function App() {
     let newPlaylist = playlist.concat(newSongsId);
     setPlaylist(newPlaylist);
     savePlaylist(newPlaylist);
+    removeDuplicateTracks(playlist);
+  };
+
+  // Check for unique values and add to song array
+  const removeDuplicateTracks = (playlist) => {
+    let uniqueTracks = playlist.filter(
+      (value, index, array) => array.indexOf(value) === index
+    );
+    // console.log("unique: " + uniqueTracks)
+    setPlaylist(uniqueTracks);
+    return playlist;
   };
 
   function getPlaylist() {
@@ -114,7 +126,9 @@ function App() {
 
   return (
     <div className="App">
+
       <Navigation />
+
       <header className="Miix-header">
         <h1>Miix</h1>
         <FontAwesomeIcon icon={faSpotify} />
