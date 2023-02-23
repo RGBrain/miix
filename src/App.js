@@ -8,9 +8,9 @@ import "./App.css";
 
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  // const redirectURI = "http://localhost:3000";
+  const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  // const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read";
@@ -63,27 +63,45 @@ function App() {
       }
     );
     console.log(data);
-    setTracks(data.items);
+    //setTracks(data.items);
     addSongs(data.items);
   };
 
-  const addSongs = (newSongs) => {
-    let newSongsId = newSongs.map((song) => song.id);
-    let playlist = getPlaylist();
-    let newPlaylist = playlist.concat(newSongsId);
+  // Adding songs to playlist based on user top tracks
+  const addSongs = (songs) => {
+    let currentPlaylist = getPlaylist();
+    console.log("currentPlaylist");
+    console.log(currentPlaylist);
+    console.log("songs");
+    console.log(songs);
+
+    const songsNotInPlaylist = songs
+      .map((song) => {
+        return {
+          id: song.id,
+          name: song.name,
+          artist: song.artists[0].name,
+          imageURL: song.album.images[0].url,
+          songURL: song.external_urls.spotify,
+        };
+      })
+      .filter((song) => {
+        return (
+          currentPlaylist.find(
+            (existingSong) => song.id === existingSong.id
+          ) === undefined
+        );
+      });
+
+    console.log("songsNotInPlaylist");
+    console.log(songsNotInPlaylist);
+
+    const newPlaylist = currentPlaylist.concat(songsNotInPlaylist);
+    console.log("newPlaylist");
+    console.log(newPlaylist);
+
     setPlaylist(newPlaylist);
     savePlaylist(newPlaylist);
-    removeDuplicateTracks(playlist);
-  };
-
-  // Check for unique values and add to song array
-  const removeDuplicateTracks = (playlist) => {
-    let uniqueTracks = playlist.filter(
-      (value, index, array) => array.indexOf(value) === index
-    );
-    // console.log("unique: " + uniqueTracks)
-    setPlaylist(uniqueTracks);
-    return playlist;
   };
 
   function getPlaylist() {
@@ -100,21 +118,19 @@ function App() {
   }
 
   const renderPlaylist = () => {
-    console.log(playlist);
-    // return playlist.map((song) => (
-    //   <div key={song.id} className="playlist">
-    //     <p>{song.id}</p>
-    //   </div>
-    // ));
+    //console.log(playlist);
   };
 
   const renderTracks = () => {
-    return tracks.map((item) => (
+    return playlist.map((item) => (
       <div key={item.id} className="tracks-container">
         <h4>{item.name}</h4>
-        <h5>{item.artists[0].name}</h5>
+        <h5>{item.artist}</h5>
+        {/* <h5>{item.artists[0].name}</h5> */}
+        <img src={item.imageURL} width="100" />
         <button>
-          <a href={`${item.preview_url}`} target="_blank" rel="noreferrer">
+          <a href={`${item.songURL}`} target="_blank" rel="noreferrer">
+            {/* <a href={`${item.preview_url}`} target="_blank" rel="noreferrer"> */}
             <FontAwesomeIcon icon={faSpotify} />
           </a>
         </button>
