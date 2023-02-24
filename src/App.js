@@ -5,11 +5,11 @@ import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 import Navigation from "./components/Navbar";
 import Hero from "./components/Hero";
+import Wrapper from "./components/Wrapper.js";
 import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
-
 
 // const App = (props) => {
 function App() {
@@ -89,9 +89,9 @@ function App() {
       <Hero />
 
       <header className="Miix-header">
-        <h1>Miix</h1>
-        {userId}
-        <FontAwesomeIcon icon={faSpotify} />
+        <h1>Miix Recommended Tracks</h1>
+        <p>Hello {userId}!</p>
+        {/* <FontAwesomeIcon icon={faSpotify} /> */}
         {!token ? (
           <a
             href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
@@ -99,14 +99,18 @@ function App() {
             Spotify login
           </a>
         ) : (
-          <button onClick={logout}>Logout</button>
+          <button onClick={logout} className="logoutBtn">
+            Logout
+          </button>
         )}
       </header>
 
       <main>
         {token ? (
-          <form onSubmit={getTracks}>
-            <button type={"submit"}>Get tracks</button>
+          <form onSubmit={getTracks} className="get-tracks-form">
+            <button type={"submit"} className="get-tracks-btn">
+              Get tracks
+            </button>
           </form>
         ) : (
           <h2>Please login</h2>
