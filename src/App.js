@@ -3,15 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 import Navigation from "./components/Navbar";
+import RenderPlaylist from "./components/RenderPlaylist";
+import Footer from "./components/Footer";
 
-// import { Navbar } from "react-bootstrap";
+import { getPlaylist, savePlaylist } from "./utils/playlistRepository";
+import addSongsToPlaylist from "./utils/playlistService";
+import { getTopSongs, getRecommendedSongs } from "./utils/SpotifyApi";
 
 import "./App.css";
-import getPlaylist from "./utils/getPlaylist";
-import savePlaylist from "./utils/savePlaylist";
-import renderTracks from "./utils/renderTracks";
-import { getTopSongs, getRecommendedSongs } from "./utils/API";
-import getSongsNotInPlaylist from "./utils/getSongsNotInPlaylist";
 
 // const App = (props) => {
 function App() {
@@ -27,6 +26,7 @@ function App() {
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
 
+  // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -44,45 +44,28 @@ function App() {
     setToken(token);
   }, []);
 
+  // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
     window.localStorage.removeItem("token");
   };
 
-  // Making API call to get user top 50 tracks
-  const getTopTracks = async (e) => {
+  const getTracks = async (e) => {
     e.preventDefault();
-    addSongsToCurrentPlaylist(await getTopSongs(token));
-    getRecommendations();
-  };
 
-  // Adding songs to playlist from other users and ensuring duplicates are removed
-  const addSongsToCurrentPlaylist = (mappedSongs) => {
-    console.log("Add mapped songs:");
-    console.log(mappedSongs);
-
-    let currentPlaylist = getPlaylist();
-    console.log("To current playlist:");
-    console.log(currentPlaylist);
-
-    const songsNotInPlaylist = getSongsNotInPlaylist(
-      currentPlaylist,
-      mappedSongs
-    );
-
-    console.log("The following songs are not in current playlist");
-    console.log(songsNotInPlaylist);
-
-    const newPlaylist = currentPlaylist.concat(songsNotInPlaylist);
-    console.log("New playlist with added songs:");
-    console.log(newPlaylist);
+    // Get existing playlist from local storage
+    const currentPlaylist = getPlaylist();
+    // Get currently logged in user's top songs
+    const topSongs = await getTopSongs(token);
+    // Create a new playlist by adding any new top songs to the playlist
+    const newPlaylist = addSongsToPlaylist(currentPlaylist, topSongs);
+    // Save the new playlist
     savePlaylist(newPlaylist);
-  };
 
-  // Making API call to get recommended tracks based on seed tracks from users
-  const getRecommendations = async (e) => {
-    const playlist = getPlaylist();
-    const recommendedSongs = await getRecommendedSongs(playlist, token);
+    // use new playlist to get recommended songs
+    const recommendedSongs = await getRecommendedSongs(newPlaylist, token);
+
+    // Display recommended songs as the current playlist
     setPlaylist(recommendedSongs);
   };
 
@@ -102,16 +85,22 @@ function App() {
         ) : (
           <button onClick={logout}>Logout</button>
         )}
+      </header>
 
+      <main>
         {token ? (
-          <form onSubmit={getTopTracks}>
+          <form onSubmit={getTracks}>
             <button type={"submit"}>Get tracks</button>
           </form>
         ) : (
           <h2>Please login</h2>
         )}
-        {renderTracks(playlist)}
-      </header>
+        {RenderPlaylist(playlist)}
+      </main>
+
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

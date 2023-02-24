@@ -1,7 +1,7 @@
 import axios from "axios";
-import mapSongs from "./mapSongs";
 import shuffleArray from "./shuffleArray";
 
+// Making API call to get user top 20 tracks
 const getTopSongs = async (token) => {
   const { data } = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
     headers: { Authorization: `Bearer ${token}` },
@@ -16,6 +16,7 @@ const getTopSongs = async (token) => {
   return songs;
 };
 
+// Making API call to get recommended tracks based on seed tracks playlist
 const getRecommendedSongs = async (playlist, token) => {
   const playlistIds = playlist.map((song) => song.id);
   // Shuffling playlist ID array to ensure the seeds are taken from a mixture of songs
@@ -37,6 +38,18 @@ const getRecommendedSongs = async (playlist, token) => {
   console.log(songs);
 
   return songs;
+};
+
+const mapSongs = (spotifyItems) => {
+  return spotifyItems.map((spotifyItem) => {
+    return {
+      id: spotifyItem.id,
+      name: spotifyItem.name,
+      artist: spotifyItem.artists[0].name,
+      imageURL: spotifyItem.album.images[0].url,
+      songURL: spotifyItem.external_urls.spotify,
+    };
+  });
 };
 
 export { getTopSongs, getRecommendedSongs };
