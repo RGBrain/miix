@@ -6,9 +6,7 @@ import Navigation from "./components/Navbar";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
 
-import { getPlaylist, savePlaylist } from "./utils/playlistRepository";
-import addSongsToPlaylist from "./utils/playlistService";
-import { getTopSongs, getRecommendedSongs } from "./utils/SpotifyApi";
+import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 
 import "./App.css";
 
@@ -53,20 +51,8 @@ function App() {
   const getTracks = async (e) => {
     e.preventDefault();
 
-    // Get existing playlist from local storage
-    const currentPlaylist = getPlaylist();
-    // Get currently logged in user's top songs
-    const topSongs = await getTopSongs(token);
-    // Create a new playlist by adding any new top songs to the playlist
-    const newPlaylist = addSongsToPlaylist(currentPlaylist, topSongs);
-    // Save the new playlist
-    savePlaylist(newPlaylist);
-
-    // use new playlist to get recommended songs
-    const recommendedSongs = await getRecommendedSongs(newPlaylist, token);
-
     // Display recommended songs as the current playlist
-    setPlaylist(recommendedSongs);
+    setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
   return (
