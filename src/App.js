@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
@@ -13,16 +14,17 @@ import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  //const redirectURI = "http://localhost:3000";
+  const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  //const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
-  const scope = "user-top-read";
+  const scope = "user-top-read playlist-modify-private";
 
   // Token needed for Oauth
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
+  const [userId, setUserId] = useState("");
 
   // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
@@ -40,13 +42,39 @@ function App() {
     }
 
     setToken(token);
+
+    async function displayUser() {
+      const user = await getUser(token);
+      console.log(user);
+
+      const userId = user.id;
+      setUserId(userId);
+      window.localStorage.setItem("userId", userId);
+    }
+    displayUser();
   }, []);
 
   // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userId");
   };
+
+  // Move to SpotifyApi
+  const getUser = async (token) => {
+    const { data } = await axios.get("https://api.spotify.com/v1/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return data;
+  };
+
+  // getUser();
+
+  // useEffect(()=> {
+  //   axios.get("https://api.spotify.com/v1/me").then((response) => {setUserId(response.data)})
+  // })
 
   const getTracks = async (e) => {
     e.preventDefault();
@@ -62,6 +90,7 @@ function App() {
 
       <header className="Miix-header">
         <h1>Miix</h1>
+        {userId}
         <FontAwesomeIcon icon={faSpotify} />
         {!token ? (
           <a
