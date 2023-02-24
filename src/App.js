@@ -90,7 +90,7 @@ function App() {
 
       <header className="Miix-header">
         <h1>Miix Recommended Tracks</h1>
-        <p>Hello {userId}!</p>
+        <p className="user-greeting">Hello {userId}!</p>
         {/* <FontAwesomeIcon icon={faSpotify} /> */}
         {!token ? (
           <a

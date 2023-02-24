@@ -28,6 +28,9 @@
   color: #61dafb;
 }
 
+.user-greeting {
+  font-size: 35px !important;
+}
 .get-tracks-form {
   padding-bottom: 20px;
   padding-top: 20px;
