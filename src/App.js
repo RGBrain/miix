@@ -81,7 +81,7 @@ function App() {
         ) : (
           <h2>Please login</h2>
         )}
-        {RenderPlaylist(playlist)}
+        {token ? RenderPlaylist(playlist) : ""}
       </main>
 
       <footer>

@@ -7,19 +7,15 @@ const getRecommendedSongsFromCombinedTopTracks = async (token) => {
   // Get currently logged in user's top songs
   const topSongs = await getTopSongs(token);
   // Create a new playlist by adding any new top songs to the playlist
-  const newPlaylist = addSongsToPlaylist(currentPlaylist, topSongs);
+  const newPlaylist = addNewSongsToPlaylist(topSongs, currentPlaylist);
   // Save the new playlist
   savePlaylist(newPlaylist);
 
   // use new playlist to get recommended songs
-  const recommendedSongs = await getRecommendedSongs(newPlaylist, token);
-  console.log("Recommended songs:");
-  console.log(recommendedSongs);
-
-  return recommendedSongs;
+  return await getRecommendedSongs(newPlaylist, token);
 };
 
-const addSongsToPlaylist = (songs, playlist) => {
+const addNewSongsToPlaylist = (songs, playlist) => {
   console.log("Add songs:");
   console.log(songs);
 
