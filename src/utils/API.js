@@ -1,39 +1,42 @@
 import axios from "axios";
-// const [data, setData] = useState([]);
+import mapSongs from "./mapSongs";
+import shuffleArray from "./shuffleArray";
 
-// useEffect(() => {
-//   axios
-//     .get("https://api.spotify.com/v1/me/top/tracks")
-//     .then((response) => {
-//       setData(response.data);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// }, []);
+const getTopSongs = async (token) => {
+  const { data } = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  console.log("Response");
+  console.log(data);
 
-// return (
-//   <div>
-//     {data.map((item) => (
-//       <p key={item.id}>{item.title}</p>
-//     ))}
-//   </div>
-// );
+  const songs = mapSongs(data.items);
+  console.log("Top songs");
+  console.log(songs);
 
-// const BASEURL = "https://";
-// const APIKEY = "";
+  return songs;
+};
 
-// export default {
-//   search: function (query) {
-//     return axios.get(BASEURL + query + APIKEY);
-//   },
-// };
+const getRecommendedSongs = async (playlist, token) => {
+  const playlistIds = playlist.map((song) => song.id);
+  // Shuffling playlist ID array to ensure the seeds are taken from a mixture of songs
+  const shuffledPlaylist = shuffleArray(playlistIds);
+  const shuffledPlaylistSeeds = shuffledPlaylist.slice(0, 5).join(",");
 
-// const getTopTracks = async (e) => {
-//   e.preventDefault();
-//   const { data } = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
-//     headers: { Authorization: `Bearer ${props.token}` },
-//   });
-//   console.log(data);
-//   addSongs(data.items);
-// };
+  const { data } = await axios.get(
+    "https://api.spotify.com/v1/recommendations",
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { seed_tracks: shuffledPlaylistSeeds, limit: 10 },
+    }
+  );
+  console.log("Response");
+  console.log(data);
+
+  const songs = mapSongs(data.tracks);
+  console.log("Recommended songs");
+  console.log(songs);
+
+  return songs;
+};
+
+export { getTopSongs, getRecommendedSongs };
