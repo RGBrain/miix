@@ -1,11 +1,17 @@
 .jumbotron {
     color: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 5;
 }
+
+
 
 .btn {
     background-color: greenyellow !important;
     border: greenyellow !important;
     color: black !important;
+    z-index: 5;
 
 }
 
@@ -14,14 +20,16 @@
     color: greenyellow !important;
 }
 
-video {
-    width: 100vw;
-    height: 100vh;
+
+.jumbotron video {
+    position: absolute;
     object-fit: cover;
-    position: fixed;
-    left: 0;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
+    left: 0;
+    overflow: hidden;
     z-index: -1;
+    width: 100%;
+    /* opacity: 50%; */
   }
