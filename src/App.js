@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import axios from "axios";
 
 import Navigation from "./components/Navbar";
+import RenderPlaylist from "./components/RenderPlaylist";
+import Footer from "./components/Footer";
 
-// import { Navbar } from "react-bootstrap";
+import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 
 import "./App.css";
-import shuffleArray from "./utils/shuffleArray";
-import mapSongs from "./utils/mapSongs";
-import getPlaylist from "./utils/getPlaylist";
-import savePlaylist from "./utils/savePlaylist";
 
-
+// const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  //const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  // const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read";
 
+  // Token needed for Oauth
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
 
+  // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -43,92 +42,21 @@ function App() {
     setToken(token);
   }, []);
 
+  // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
     window.localStorage.removeItem("token");
   };
 
-  // Making API call to get user top 50 tracks
-  const getTopTracks = async (e) => {
+  const getTracks = async (e) => {
     e.preventDefault();
-    const { data } = await axios.get(
-      "https://api.spotify.com/v1/me/top/tracks",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    console.log(data);
-    addSongs(data.items);
-    getRecommendations();
-  };
 
-  // Making API call to get recommended tracks based on seed tracks from users
-  const getRecommendations = async (e) => {
-    const playlist = getPlaylist();
-    const playlistIDs = playlist.map((song) => song.id);
-    // Shuffling playlist ID array to ensure the seeds are taken from a mixture of songs
-    const shuffledPlaylist = shuffleArray(playlistIDs);
-    const shuffledPlaylistSeeds = shuffledPlaylist.slice(0, 5).join(",");
-
-    const { data } = await axios.get(
-      "https://api.spotify.com/v1/recommendations",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { seed_tracks: shuffledPlaylistSeeds, limit: 10 },
-      }
-    );
-    console.log(data);
-    setPlaylist(mapSongs(data.tracks));
-  };
-
-  // Adding songs to playlist from other users and ensuring duplicates are removed
-  const addSongs = (songs) => {
-    let currentPlaylist = getPlaylist();
-    console.log("currentPlaylist");
-    console.log(currentPlaylist);
-    console.log("songs");
-    console.log(songs);
-
-    const songsNotInPlaylist = mapSongs(songs).filter((song) => {
-      return (
-        currentPlaylist.find((existingSong) => song.id === existingSong.id) ===
-        undefined
-      );
-    });
-
-    console.log("songsNotInPlaylist");
-    console.log(songsNotInPlaylist);
-
-    const newPlaylist = currentPlaylist.concat(songsNotInPlaylist);
-    console.log("newPlaylist");
-    console.log(newPlaylist);
-
-    setPlaylist(newPlaylist);
-    savePlaylist(newPlaylist);
-  };
-
-  // function savePlaylist(playlist) {
-  //   localStorage.setItem("playlist", JSON.stringify(playlist));
-  // }
-
-  const renderTracks = () => {
-    return playlist.map((item) => (
-      <div key={item.id} className="tracks-container">
-        <h4>{item.name}</h4>
-        <h5>{item.artist}</h5>
-        <img src={item.imageURL} width="100" />
-        <button>
-          <a href={`${item.songURL}`} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon icon={faSpotify} />
-          </a>
-        </button>
-      </div>
-    ));
+    // Display recommended songs as the current playlist
+    setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
   return (
     <div className="App">
-
       <Navigation />
 
       <header className="Miix-header">
@@ -143,17 +71,22 @@ function App() {
         ) : (
           <button onClick={logout}>Logout</button>
         )}
+      </header>
 
+      <main>
         {token ? (
-          <form onSubmit={getTopTracks}>
+          <form onSubmit={getTracks}>
             <button type={"submit"}>Get tracks</button>
           </form>
         ) : (
           <h2>Please login</h2>
         )}
+        {token ? RenderPlaylist(playlist) : ""}
+      </main>
 
-        {renderTracks()}
-      </header>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

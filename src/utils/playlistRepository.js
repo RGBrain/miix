@@ -1,5 +1,3 @@
-import React from "react";
-
 function getPlaylist() {
   let playlist = JSON.parse(localStorage.getItem("playlist"));
   if (playlist) {
@@ -9,4 +7,8 @@ function getPlaylist() {
   }
 }
 
-export default getPlaylist;
+function savePlaylist(playlist) {
+  localStorage.setItem("playlist", JSON.stringify(playlist));
+}
+
+export { getPlaylist, savePlaylist };
