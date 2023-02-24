@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 import Navigation from "./components/Navbar";
+import Hero from "./components/Hero";
+import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
-
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 
-import "./App.css";
 
 // const App = (props) => {
 function App() {
@@ -58,6 +58,7 @@ function App() {
   return (
     <div className="App">
       <Navigation />
+      <Hero />
 
       <header className="Miix-header">
         <h1>Miix</h1>

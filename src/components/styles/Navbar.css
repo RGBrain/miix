@@ -1,7 +1,11 @@
-.navItems {
-  color: black !important;
-}
+.nav-item {
+    color: black !important;
+};
 
-.myNavbar {
-  color: green !important;
-}
+a:hover {
+    color: red !important;
+};
+
+.navigation {
+    background-color: white !important;
+};
