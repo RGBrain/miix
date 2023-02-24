@@ -11,8 +11,6 @@
     background-color: #121212 !important;
 }
 
-
-
 .btn {
     background-color: var(--green) !important;
     border: var(--green) !important;
@@ -26,7 +24,6 @@
     color: var(--green) !important;
 }
 
-
 .jumbotron video {
     position: absolute;
     object-fit: cover;
@@ -37,6 +34,5 @@
     /* overflow: hidden; */
     z-index: -1;
     width: 100%;
-    /* opacity: 50%; */
     margin: auto 0;
   }
