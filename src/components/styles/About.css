@@ -31,5 +31,14 @@ h2 {
 #aboutBtn {
     color: var(--white);
     font-weight: 900;
+    box-shadow: none;
+}
+
+#aboutBtn:hover {
+    text-decoration: none;
+}
+
+#aboutBtn:visited {
+    text-decoration: none;
 }
 
