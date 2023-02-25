@@ -29,6 +29,12 @@
   color: #61dafb;
 }
 
+.card {
+  background-color: black !important;
+  color: white;
+  padding: 20px;
+}
+
 .user-greeting {
   font-size: 35px !important;
 }
@@ -39,6 +45,7 @@
   background: black;
   border-radius: 5%;
   padding: 5px;
+  margin-top: 20px !important;
 }
 
 .get-tracks-form {
@@ -54,6 +61,10 @@
   padding: 10px;
   border-radius: 5px;
   font-size: 20px;
+}
+
+.logoutBtn {
+  margin-top: 20px;
 }
 
 @keyframes App-logo-spin {

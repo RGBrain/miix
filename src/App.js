@@ -89,9 +89,11 @@ function App() {
       <Hero />
 
       <header className="Miix-header">
-        <h1>Miix Recommended Tracks</h1>
-        <p className="user-greeting">Hello {userId}!</p>
-        {/* <FontAwesomeIcon icon={faSpotify} /> */}
+        <div className="card">
+          <h1>Miix Recommended Tracks</h1>
+          <p className="user-greeting">Hello {userId}!</p>
+        </div>
+
         {!token ? (
           <a
             href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
