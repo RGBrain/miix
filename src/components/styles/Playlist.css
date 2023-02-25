@@ -31,3 +31,7 @@
   color: #adff2f !important;
   font-size: 50px !important;
 }
+
+.fa-spotify:hover {
+  color: white;
+}
