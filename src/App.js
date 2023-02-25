@@ -14,9 +14,9 @@ import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  //const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  //const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read playlist-modify-private";
@@ -70,12 +70,6 @@ function App() {
     return data;
   };
 
-  // getUser();
-
-  // useEffect(()=> {
-  //   axios.get("https://api.spotify.com/v1/me").then((response) => {setUserId(response.data)})
-  // })
-
   const getTracks = async (e) => {
     e.preventDefault();
 
@@ -90,21 +84,19 @@ function App() {
       <About />
 
       <header className="Miix-header">
-        <div className="greeting-card col-lg-6 col-md-6 col-sm-12">
-          <h1 className="user-greeting">Hello {userId}!</h1>
-          {/* <h1>Miix Recommended Tracks</h1> */}
-          {/* <p className="user-greeting">Hello {userId}!</p> */}
-        </div>
-        {/* <div className="col-lg-12 col-md-12 col-sm-12"> */}
         {!token ? (
-          <a
-            href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
-            className="login-link"
-          >
-            <FontAwesomeIcon icon={faSpotify} />
-          </a>
+          <div>
+            <h2 className="login">Please login</h2>
+            <a
+              href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
+              className="login-link"
+            >
+              <FontAwesomeIcon icon={faSpotify} />
+            </a>
+          </div>
         ) : (
           <div className="btn-div col-lg-12 col-md-12 col-sm-12">
+            <h1 className="user-greeting">Hello {userId}!</h1>
             <button onClick={logout} className="logoutBtn">
               Logout
             </button>
@@ -113,7 +105,7 @@ function App() {
                 Get tracks
               </button>
             ) : (
-              <h2 className="login">Please login</h2>
+              <p className="login">Please login</p>
             )}
             {token ? RenderPlaylist(playlist) : ""}
           </div>
