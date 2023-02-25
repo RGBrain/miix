@@ -5,7 +5,7 @@ import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 import Navigation from "./components/Navbar";
 import Hero from "./components/Hero";
-import Wrapper from "./components/Wrapper.js";
+import About from "./components/About";
 import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
@@ -14,9 +14,9 @@ import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  //const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  //const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read playlist-modify-private";
@@ -87,6 +87,7 @@ function App() {
     <div className="App">
       <Navigation />
       <Hero />
+      <About />
 
       <header className="Miix-header">
         <div className="card">
