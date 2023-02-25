@@ -1,3 +1,8 @@
+.Miix-header,
+.get-tracks-form {
+  text-align: center;
+}
+
 .track-container {
   display: flex;
   justify-content: center;
@@ -6,10 +11,12 @@
 }
 
 .nameAndArtist {
-  min-width: 200px;
+  width: 200px;
   color: white;
-  justify-content: left;
+  justify-content: left !important;
   word-wrap: break-word;
+  vertical-align: center !important;
+  padding-left: 10px;
 }
 
 .songBtn {

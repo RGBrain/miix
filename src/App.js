@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
@@ -99,6 +100,8 @@ function App() {
             Spotify login
           </a>
         ) : (
+          // <button onClick="window.location.href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`};"
+
           <button onClick={logout} className="logoutBtn">
             Logout
           </button>
@@ -113,7 +116,7 @@ function App() {
             </button>
           </form>
         ) : (
-          <h2>Please login</h2>
+          <h2 className="login">Please login</h2>
         )}
         {token ? RenderPlaylist(playlist) : ""}
       </main>
