@@ -1,0 +1,18 @@
+:root {
+    --green: #1DB954;
+    --white: white;
+}
+
+h2 {
+    font-size: 30px !important;
+    font-weight: lighter !important;
+}
+
+.container-about  {
+    text-align: center !important;
+}
+
+#headingOne {
+    background-color: var(--green);
+}
+

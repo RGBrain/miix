@@ -4,24 +4,22 @@ import './styles/About.css';
 function About() {
   return (
     <section className="container.fluid container-about">
-        <h2 id="anchor-howItWorks">HOW IT WORKS</h2>
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 d-none">
-            </div>
-            <div class="col-lg-8 col-md-8 col-sm-12">
+        <h2 id="anchor-howItWorks">Create a playlist for everyone using miix</h2>
+        <div className="row">
+            <div className="col-lg-10 col-md-12 col-sm-12">
                 <div id="accordion">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        How mixx works
+                <div className="card">
+                    <div className="card-header" id="headingOne">
+                    <h5 className="mb-0">
+                        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        How it works
                         </button>
                     </h5>
                     </div>
                 
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
-                        
+                    <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div className="card-body">
+                    This is how I work.   
                     </div>
                     </div>
                 </div>
