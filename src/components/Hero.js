@@ -9,7 +9,7 @@ function Hero() {
         <h1 className="display-4">Make your mixx</h1>
         <p className="lead">Playlists for everyone to enjoy</p>
         <p className="lead">
-            <a className="btn btn-primary btn-lg" href="#" role="button">Get started</a>
+            <a className="btn btn-primary btn-lg" id="hero-btn" href="#" role="button">Get started</a>
         </p>
     </div>
   )
