@@ -47,7 +47,7 @@
 }
 
 .login-link {
-  color: #adff2f !important;
+  color: #28a745 !important;
   font-size: 50px !important;
   background: black;
   border-radius: 5%;
@@ -58,7 +58,7 @@
 .btn-div {
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
+  background-color: black;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -69,8 +69,8 @@
   margin-right: auto !important;
   margin-bottom: 20px;
   border: none !important;
-  background-color: black;
-  color: #adff2f !important;
+  background-color: #28a745;
+  color: black !important;
   padding: 10px;
   border-radius: 5px;
   font-size: 20px;
@@ -92,6 +92,6 @@
 
 .get-tracks-btn:hover,
 .logoutBtn:hover {
-  background-color: #adff2f;
-  color: black !important;
+  background-color: white;
+  color: #28a745 !important;
 }

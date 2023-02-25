@@ -1,5 +1,7 @@
 .Miix-header {
   text-align: center;
+  background-color: black;
+  color: white;
 }
 
 .track-container {
@@ -28,7 +30,7 @@
 }
 
 .songLink {
-  color: #adff2f !important;
+  color: #28a745 !important;
   font-size: 50px !important;
 }
 
