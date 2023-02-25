@@ -1,4 +1,5 @@
-.App {
+.jumbotron,
+.login {
   text-align: center;
 }
 
@@ -26,6 +27,44 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.card {
+  background-color: black !important;
+  color: white;
+  padding: 20px;
+}
+
+.user-greeting {
+  font-size: 35px !important;
+}
+
+.login-link {
+  color: #adff2f !important;
+  font-size: 50px !important;
+  background: black;
+  border-radius: 5%;
+  padding: 5px;
+  margin-top: 20px !important;
+}
+
+.get-tracks-form {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.get-tracks-btn,
+.logoutBtn {
+  border: none !important;
+  background-color: black;
+  color: #adff2f !important;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.logoutBtn {
+  margin-top: 20px;
 }
 
 @keyframes App-logo-spin {

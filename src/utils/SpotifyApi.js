@@ -40,6 +40,25 @@ const getRecommendedSongs = async (playlist, token) => {
   return songs;
 };
 
+//Thinking about post API call
+// const postPlaylist = async (token, userId) => {
+//   const { data } = await axios.get(
+//     "https://api.spotify.com/v1/users/{userId}/playlists",
+//     {
+//       headers: { Authorization: `Bearer ${token}` },
+//       params: { name: "Miix recommendations" },
+//     }
+//   );
+//   console.log("Response");
+//   console.log(data);
+
+//   const songs = mapSongs(data.items);
+//   console.log("Top songs");
+//   console.log(songs);
+
+//   return songs;
+// };
+
 const mapSongs = (spotifyItems) => {
   return spotifyItems.map((spotifyItem) => {
     return {
