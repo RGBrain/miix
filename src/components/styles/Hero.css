@@ -11,8 +11,6 @@
     background-color: #121212 !important;
 }
 
-
-
 #hero-btn {
     background-color: var(--green) !important;
     border: var(--green) !important;
@@ -26,7 +24,6 @@
     color: var(--green) !important;
 }
 
-
 .jumbotron video {
     position: absolute;
     object-fit: cover;
@@ -34,9 +31,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    /* overflow: hidden; */
     z-index: -1;
     width: 100%;
-    /* opacity: 50%; */
     margin: auto 0;
   }
