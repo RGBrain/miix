@@ -5,7 +5,6 @@ import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 import Navigation from "./components/Navbar";
 import Hero from "./components/Hero";
-import Wrapper from "./components/Wrapper.js";
 import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
@@ -89,11 +88,12 @@ function App() {
       <Hero />
 
       <header className="Miix-header">
-        <div className="card">
-          <h1>Miix Recommended Tracks</h1>
-          <p className="user-greeting">Hello {userId}!</p>
+        <div className="greeting-card col-lg-6 col-md-6 col-sm-12">
+          <h1 className="user-greeting">Hello {userId}!</h1>
+          {/* <h1>Miix Recommended Tracks</h1> */}
+          {/* <p className="user-greeting">Hello {userId}!</p> */}
         </div>
-
+        {/* <div className="col-lg-12 col-md-12 col-sm-12"> */}
         {!token ? (
           <a
             href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
@@ -102,27 +102,29 @@ function App() {
             <FontAwesomeIcon icon={faSpotify} />
           </a>
         ) : (
-          // <button onClick="window.location.href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`};"
-
-          <button onClick={logout} className="logoutBtn">
-            Logout
-          </button>
-        )}
-      </header>
-
-      <main>
-        {token ? (
-          <form onSubmit={getTracks} className="get-tracks-form">
-            <button type={"submit"} className="get-tracks-btn">
-              Get tracks
+          <div className="btn-div col-lg-12 col-md-12 col-sm-12">
+            <button onClick={logout} className="logoutBtn">
+              Logout
             </button>
-          </form>
+            {token ? (
+              <button onClick={getTracks} className="get-tracks-btn">
+                Get tracks
+              </button>
+            ) : (
+              <h2 className="login">Please login</h2>
+            )}
+            {token ? RenderPlaylist(playlist) : ""}
+          </div>
+        )}
+        {/* {token ? (
+          <button onClick={getTracks} className="get-tracks-btn">
+            Get tracks
+          </button>
         ) : (
           <h2 className="login">Please login</h2>
         )}
-        {token ? RenderPlaylist(playlist) : ""}
-      </main>
-
+        {token ? RenderPlaylist(playlist) : ""} */}
+      </header>
       <footer>
         <Footer />
       </footer>

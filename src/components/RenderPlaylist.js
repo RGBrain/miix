@@ -8,7 +8,7 @@ const RenderPlaylist = (playlist) => {
     return (
       <div
         key={item.id}
-        className="track-container container col-lg-12 col-md-12 col-sm-3"
+        className="track-container container col-lg-12 col-md-12 col-sm-12"
       >
         <img
           src={item.imageURL}

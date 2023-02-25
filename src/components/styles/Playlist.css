@@ -1,5 +1,4 @@
-.Miix-header,
-.get-tracks-form {
+.Miix-header {
   text-align: center;
 }
 
@@ -8,14 +7,16 @@
   justify-content: center;
   background-color: black;
   padding: 10px;
+  padding-top: 20px;
 }
 
-.nameAndArtist {
+.nameAndArtist > h6,
+.nameAndArtist > p {
   width: 200px;
   color: white;
   justify-content: left !important;
   word-wrap: break-word;
-  vertical-align: center !important;
+  /* vertical-align: center !important; */
   padding-left: 10px;
 }
 
