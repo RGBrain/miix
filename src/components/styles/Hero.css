@@ -11,7 +11,7 @@
     background-color: #121212 !important;
 }
 
-.btn {
+#hero-btn {
     background-color: var(--green) !important;
     border: var(--green) !important;
     color: black !important;
@@ -19,7 +19,7 @@
 
 }
 
-.btn:hover {
+#hero-btn:hover {
     background-color: var(--white) !important;
     color: var(--green) !important;
 }
