@@ -32,6 +32,15 @@
 .user-greeting {
   font-size: 35px !important;
 }
+
+.login-link {
+  color: #adff2f !important;
+  font-size: 50px !important;
+  background: black;
+  border-radius: 5%;
+  padding: 5px;
+}
+
 .get-tracks-form {
   padding-bottom: 20px;
   padding-top: 20px;
@@ -44,6 +53,7 @@
   color: #adff2f !important;
   padding: 10px;
   border-radius: 5px;
+  font-size: 20px;
 }
 
 @keyframes App-logo-spin {
