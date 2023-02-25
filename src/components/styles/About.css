@@ -5,14 +5,31 @@
 
 h2 {
     font-size: 30px !important;
-    font-weight: lighter !important;
+    text-shadow: 100px red !important;
+    /* font-weight: lighter !important; */
+}
+
+.row {
+    justify-content: center;
 }
 
 .container-about  {
-    text-align: center !important;
+    background-image: url(../assets/white-background.jpg);
+    object-fit: cover;
+    padding: 50px;
+}
+
+.row {
+    padding-top: 50px;
+
 }
 
 #headingOne {
-    background-color: var(--green);
+    background-color: black;
+}
+
+#aboutBtn {
+    color: var(--white);
+    font-weight: 900;
 }
 
