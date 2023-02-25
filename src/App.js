@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import axios from "axios";
+
 import Navigation from "./components/Navbar";
 import Hero from "./components/Hero";
+import About from "./components/About"
 import "./App.css";
+import RenderPlaylist from "./components/RenderPlaylist";
+import Footer from "./components/Footer";
+import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 
 
+// const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
   //const redirectURI = "http://localhost:3000";
@@ -16,11 +21,11 @@ function App() {
   const responseType = "token";
   const scope = "user-top-read";
 
+  // Token needed for Oauth
   const [token, setToken] = useState("");
-  const [searchKey, setSearchKey] = useState("");
-  const [tracks, setTracks] = useState([]);
   const [playlist, setPlaylist] = useState([]);
 
+  // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -38,84 +43,25 @@ function App() {
     setToken(token);
   }, []);
 
+  // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
     window.localStorage.removeItem("token");
   };
 
-  // const searchArtists = async (e) => {
-  //   e.preventDefault();
-  //   const { data } = await axios.get("https://api.spotify.com/v1/search", {
-  //     headers: { Authorization: `Bearer ${token}` },
-  //     params: { q: searchKey, type: "artist" },
-  //   });
-
-  //   console.log(data);
-
-  // };
-
-  // Making API call to get user top 50 tracks
-  const getTopTracks = async (e) => {
+  const getTracks = async (e) => {
     e.preventDefault();
-    const { data } = await axios.get(
-      "https://api.spotify.com/v1/me/top/tracks",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    console.log(data);
-    setTracks(data.items);
-    addSongs(data.items);
-  };
 
-  const addSongs = (newSongs) => {
-    let newSongsId = newSongs.map((song) => song.id);
-    let playlist = getPlaylist();
-    let newPlaylist = playlist.concat(newSongsId);
-    setPlaylist(newPlaylist);
-    savePlaylist(newPlaylist);
-  };
-
-  function getPlaylist() {
-    let playlist = JSON.parse(localStorage.getItem("playlist"));
-    if (playlist) {
-      return playlist;
-    } else {
-      return [];
-    }
-  }
-
-  function savePlaylist(playlist) {
-    localStorage.setItem("playlist", JSON.stringify(playlist));
-  }
-
-  const renderPlaylist = () => {
-    console.log(playlist);
-    // return playlist.map((song) => (
-    //   <div key={song.id} className="playlist">
-    //     <p>{song.id}</p>
-    //   </div>
-    // ));
-  };
-
-  const renderTracks = () => {
-    return tracks.map((item) => (
-      <div key={item.id} className="tracks-container">
-        <h4>{item.name}</h4>
-        <h5>{item.artists[0].name}</h5>
-        <button>
-          <a href={`${item.preview_url}`} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon icon={faSpotify} />
-          </a>
-        </button>
-      </div>
-    ));
+    // Display recommended songs as the current playlist
+    setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
   return (
     <div className="App">
       <Navigation />
       <Hero />
+      <About />
+
       <header className="Miix-header">
         <h1>Miix</h1>
         <FontAwesomeIcon icon={faSpotify} />
@@ -128,18 +74,22 @@ function App() {
         ) : (
           <button onClick={logout}>Logout</button>
         )}
+      </header>
 
+      <main>
         {token ? (
-          <form onSubmit={getTopTracks}>
+          <form onSubmit={getTracks}>
             <button type={"submit"}>Get tracks</button>
           </form>
         ) : (
           <h2>Please login</h2>
         )}
+        {token ? RenderPlaylist(playlist) : ""}
+      </main>
 
-        {renderTracks()}
-        {renderPlaylist()}
-      </header>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

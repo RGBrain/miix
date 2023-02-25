@@ -21,13 +21,13 @@ function Navigation() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-              <a className="nav-link spacer" href="#anchor-projects">How it works</a>
+              <a className="nav-link spacer" href="#">How it works</a>
               </li>
               <li className="nav-item">
-              <a className="nav-link spacer" href="#anchor-skills">Login</a>
+              <a className="nav-link spacer" href="#">Login</a>
               </li>
               <li className="nav-item">
-                  <a className="nav-link spacer" href="#anchor-contact">Player</a>
+                  <a className="nav-link spacer" href="#">Player</a>
               </li>
           </ul>
           </div>
