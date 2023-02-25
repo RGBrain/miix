@@ -110,14 +110,6 @@ function App() {
             {token ? RenderPlaylist(playlist) : ""}
           </div>
         )}
-        {/* {token ? (
-          <button onClick={getTracks} className="get-tracks-btn">
-            Get tracks
-          </button>
-        ) : (
-          <h2 className="login">Please login</h2>
-        )}
-        {token ? RenderPlaylist(playlist) : ""} */}
       </header>
       <footer>
         <Footer />
