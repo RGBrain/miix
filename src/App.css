@@ -33,6 +33,13 @@
   background-color: black !important;
   color: white;
   padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.greeting-card {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .user-greeting {
@@ -40,7 +47,7 @@
 }
 
 .login-link {
-  color: #adff2f !important;
+  color: #28a745 !important;
   font-size: 50px !important;
   background: black;
   border-radius: 5%;
@@ -48,16 +55,23 @@
   margin-top: 20px !important;
 }
 
-.get-tracks-form {
-  padding-bottom: 20px;
-  padding-top: 20px;
+.btn-div {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: black;
+  color: white;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .get-tracks-btn,
 .logoutBtn {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 20px;
   border: none !important;
-  background-color: black;
-  color: #adff2f !important;
+  background-color: #28a745;
+  color: black !important;
   padding: 10px;
   border-radius: 5px;
   font-size: 20px;
@@ -65,6 +79,7 @@
 
 .logoutBtn {
   margin-top: 20px;
+  margin-right: 10px !important;
 }
 
 @keyframes App-logo-spin {
@@ -74,4 +89,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.get-tracks-btn:hover,
+.logoutBtn:hover {
+  background-color: white;
+  color: #28a745 !important;
 }

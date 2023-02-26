@@ -25,6 +25,7 @@ function App() {
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
 
   // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
@@ -48,8 +49,11 @@ function App() {
       console.log(user);
 
       const userId = user.id;
+      const userName = user.display_name;
       setUserId(userId);
+      setUserName(userName);
       window.localStorage.setItem("userId", userId);
+      window.localStorage.setItem("userName", userName);
     }
     displayUser();
   }, []);
@@ -59,6 +63,7 @@ function App() {
     setToken("");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("userId");
+    window.localStorage.removeItem("userName");
   };
 
   // Move to SpotifyApi
@@ -69,12 +74,6 @@ function App() {
 
     return data;
   };
-
-  // getUser();
-
-  // useEffect(()=> {
-  //   axios.get("https://api.spotify.com/v1/me").then((response) => {setUserId(response.data)})
-  // })
 
   const getTracks = async (e) => {
     e.preventDefault();
@@ -90,40 +89,33 @@ function App() {
       <About />
 
       <header className="Miix-header">
-        <div className="card">
-          <h1>Miix Recommended Tracks</h1>
-          <p className="user-greeting">Hello {userId}!</p>
-        </div>
-
         {!token ? (
-          <a
-            href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
-            className="login-link"
-          >
-            <FontAwesomeIcon icon={faSpotify} />
-          </a>
+          <div>
+            <h2 className="login">Please login</h2>
+            <a
+              href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
+              className="login-link"
+            >
+              <FontAwesomeIcon icon={faSpotify} />
+            </a>
+          </div>
         ) : (
-          // <button onClick="window.location.href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`};"
-
-          <button onClick={logout} className="logoutBtn">
-            Logout
-          </button>
+          <div className="btn-div col-lg-12 col-md-12 col-sm-12">
+            <h1 className="user-greeting">Hello {userName}!</h1>
+            <button onClick={logout} className="logoutBtn">
+              Logout
+            </button>
+            {token ? (
+              <button onClick={getTracks} className="get-tracks-btn">
+                Get tracks
+              </button>
+            ) : (
+              <p className="login">Please login</p>
+            )}
+            {token ? RenderPlaylist(playlist) : ""}
+          </div>
         )}
       </header>
-
-      <main>
-        {token ? (
-          <form onSubmit={getTracks} className="get-tracks-form">
-            <button type={"submit"} className="get-tracks-btn">
-              Get tracks
-            </button>
-          </form>
-        ) : (
-          <h2 className="login">Please login</h2>
-        )}
-        {token ? RenderPlaylist(playlist) : ""}
-      </main>
-
       <footer>
         <Footer />
       </footer>
