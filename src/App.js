@@ -14,9 +14,9 @@ import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  //const redirectURI = "http://localhost:3000";
+  const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  //const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope = "user-top-read playlist-modify-private";
@@ -25,6 +25,7 @@ function App() {
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
 
   // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
@@ -48,8 +49,11 @@ function App() {
       console.log(user);
 
       const userId = user.id;
+      const userName = user.display_name;
       setUserId(userId);
+      setUserName(userName);
       window.localStorage.setItem("userId", userId);
+      window.localStorage.setItem("userName", userName);
     }
     displayUser();
   }, []);
@@ -59,6 +63,7 @@ function App() {
     setToken("");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("userId");
+    window.localStorage.removeItem("userName");
   };
 
   // Move to SpotifyApi
@@ -96,7 +101,7 @@ function App() {
           </div>
         ) : (
           <div className="btn-div col-lg-12 col-md-12 col-sm-12">
-            <h1 className="user-greeting">Hello {userId}!</h1>
+            <h1 className="user-greeting">Hello {userName}!</h1>
             <button onClick={logout} className="logoutBtn">
               Logout
             </button>
