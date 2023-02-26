@@ -8,7 +8,9 @@
     position: relative;
     overflow: hidden;
     z-index: 5;
-    background-color: #121212 !important;
+    /* background-color: #121212 !important; */
+    background-color: transparent;
+    padding: 2rem, 0rem;
 }
 
 #hero-btn {
@@ -34,4 +36,8 @@
     z-index: -1;
     width: 100%;
     margin: auto 0;
+  }
+
+  .video-background {
+    height: 485px;
   }
