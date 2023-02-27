@@ -86,10 +86,10 @@ function App() {
     setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
-  // !! Get playlist from local storage and store it
+  // Get playlist from local storage and store it
   let track = getPlaylist();
-  let playerPlaylist = "spotify:track:" + track[1].id;
-  console.log("Here is the val of playerPlaylist: " + playerPlaylist[1].id);
+  let playerPlaylist = "spotify:track:" + track[0].id;
+
 
   return (
     <div className="App">
@@ -128,7 +128,8 @@ function App() {
 
           <SpotifyPlayer
           token={token}
-          // uris={'spotify:track:7xGfFoTpQ2E7fRF5lN10tr'}
+          // Need to pass in a playlist id into context_url
+          // context_uri={INSERT PLAYLIST ID}
           uris={playerPlaylist}
           />;
       <footer>
