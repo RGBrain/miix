@@ -10,26 +10,23 @@ import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
-import SpotifyPlayer from 'react-spotify-web-playback';
-import { getPlaylist } from "./utils/playlistRepository";
-
-
 
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  //const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  // const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
-  const scope = "user-top-read playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
+  const scope =
+    "user-top-read playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
 
   // Token needed for Oauth
   const [token, setToken] = useState("");
-  const [playlist, setPlaylist] = useState([]);
-  const [userId, setUserId] = useState("");
+  //const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
+  const [playlist, setPlaylist] = useState([]);
 
   // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
@@ -54,7 +51,7 @@ function App() {
 
       const userId = user.id;
       const userName = user.display_name;
-      setUserId(userId);
+      //setUserId(userId);
       setUserName(userName);
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("userName", userName);
@@ -65,9 +62,12 @@ function App() {
   // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
+    //setUserId("");
+    setUserName("");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("userId");
     window.localStorage.removeItem("userName");
+    window.localStorage.removeItem("playlist");
   };
 
   // Move to SpotifyApi
@@ -86,17 +86,11 @@ function App() {
     setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
-  // Get playlist from local storage and store it
-  let track = getPlaylist();
-  let playerPlaylist = "spotify:track:" + track[0].id;
-
-
   return (
     <div className="App">
       <Navigation />
       <Hero />
       <About />
-
       <header className="Miix-header">
         {!token ? (
           <div>
@@ -121,17 +115,13 @@ function App() {
             ) : (
               <p className="login">Please login</p>
             )}
-            {token ? RenderPlaylist(playlist) : ""}
+            <div>
+              <div id="player"></div>
+              {token ? RenderPlaylist(playlist, token) : ""}
+            </div>
           </div>
         )}
       </header>
-
-          <SpotifyPlayer
-          token={token}
-          // Need to pass in a playlist id into context_url
-          // context_uri={INSERT PLAYLIST ID}
-          uris={playerPlaylist}
-          />;
       <footer>
         <Footer />
       </footer>
