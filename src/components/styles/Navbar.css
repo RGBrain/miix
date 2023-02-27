@@ -1,16 +1,20 @@
 :root {
-    --green: #1DB954;
-    --white: white;
+  --green: #1db954;
+  --white: white;
 }
 
 .nav-item {
-    color: black !important;
-};
+  color: black !important;
+}
 
 a:hover {
-    color: var(--green) !important;
-};
+  color: var(--green) !important;
+}
 
 .navigation {
-    background-color: var(--white) !important;
-};
+  background-color: var(--white) !important;
+}
+
+.navbar {
+  background-color: white;
+}
