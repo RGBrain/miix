@@ -1,9 +1,28 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactDOM from "react-dom";
+import SpotifyPlayer from "react-spotify-web-playback";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles/Playlist.css";
 
-const RenderPlaylist = (playlist) => {
+const playTrack = (trackId, token) => {
+  console.log("Play track");
+  console.log(trackId);
+  ReactDOM.render(
+    <React.Fragment>
+      <SpotifyPlayer
+        token={token}
+        // Need to pass in a playlist id into context_url
+        // context_uri={INSERT PLAYLIST ID}
+        uris={`spotify:track:${trackId}`}
+        autoPlay="true"
+      />
+    </React.Fragment>,
+    document.querySelector("#player")
+  );
+};
+
+const RenderPlaylist = (playlist, token) => {
   return playlist.map((item) => {
     return (
       <div
@@ -19,15 +38,14 @@ const RenderPlaylist = (playlist) => {
           <h6>{item.name}</h6>
           <p>{item.artist}</p>
         </div>
-        <button className="songBtn">
-          <a
-            href={`${item.songURL}`}
-            target="_blank"
-            rel="noreferrer"
-            className="songLink"
-          >
-            <FontAwesomeIcon icon={faSpotify} />
-          </a>
+        <button
+          className="songBtn songLink"
+          data-spotify-track-id={item.id}
+          onClick={(e) => {
+            playTrack(item.id, token);
+          }}
+        >
+          <FontAwesomeIcon icon={faSpotify} />
         </button>
       </div>
     );

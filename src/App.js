@@ -19,13 +19,14 @@ function App() {
   const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
-  const scope = "user-top-read playlist-modify-private";
+  const scope =
+    "user-top-read playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
 
   // Token needed for Oauth
   const [token, setToken] = useState("");
-  const [playlist, setPlaylist] = useState([]);
-  const [userId, setUserId] = useState("");
+  //const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
+  const [playlist, setPlaylist] = useState([]);
 
   // Retrieves and stores the user's access token from the Spotify redirect URL after the user logs into Spotify
   useEffect(() => {
@@ -50,7 +51,7 @@ function App() {
 
       const userId = user.id;
       const userName = user.display_name;
-      setUserId(userId);
+      //setUserId(userId);
       setUserName(userName);
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("userName", userName);
@@ -61,9 +62,12 @@ function App() {
   // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
+    //setUserId("");
+    setUserName("");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("userId");
     window.localStorage.removeItem("userName");
+    window.localStorage.removeItem("playlist");
   };
 
   // Move to SpotifyApi
@@ -87,7 +91,6 @@ function App() {
       <Navigation />
       <Hero />
       <About />
-
       <header className="Miix-header">
         {!token ? (
           <div>
@@ -112,7 +115,10 @@ function App() {
             ) : (
               <p className="login">Please login</p>
             )}
-            {token ? RenderPlaylist(playlist) : ""}
+            <div>
+              <div id="player"></div>
+              {token ? RenderPlaylist(playlist, token) : ""}
+            </div>
           </div>
         )}
       </header>
