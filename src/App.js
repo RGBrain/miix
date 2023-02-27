@@ -10,6 +10,9 @@ import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
+import SpotifyPlayer from 'react-spotify-web-playback';
+
+
 
 // const App = (props) => {
 function App() {
@@ -19,7 +22,7 @@ function App() {
   // const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
-  const scope = "user-top-read playlist-modify-private";
+  const scope = "user-top-read playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
 
   // Token needed for Oauth
   const [token, setToken] = useState("");
@@ -116,6 +119,10 @@ function App() {
           </div>
         )}
       </header>
+          <SpotifyPlayer
+          token={token}
+          uris={['spotify:artist:6HQYnRM4OzToCYPpVBInuU']}
+          />;
       <footer>
         <Footer />
       </footer>
