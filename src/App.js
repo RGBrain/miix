@@ -11,6 +11,7 @@ import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 import SpotifyPlayer from 'react-spotify-web-playback';
+import { getPlaylist } from "./utils/playlistRepository";
 
 
 
@@ -85,6 +86,11 @@ function App() {
     setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
+  // !! Get playlist from local storage and store it
+  let track = getPlaylist();
+  let playerPlaylist = "spotify:track:" + track[1].id;
+  console.log("Here is the val of playerPlaylist: " + playerPlaylist[1].id);
+
   return (
     <div className="App">
       <Navigation />
@@ -119,9 +125,11 @@ function App() {
           </div>
         )}
       </header>
+
           <SpotifyPlayer
           token={token}
-          uris={['spotify:artist:6HQYnRM4OzToCYPpVBInuU']}
+          // uris={'spotify:track:7xGfFoTpQ2E7fRF5lN10tr'}
+          uris={playerPlaylist}
           />;
       <footer>
         <Footer />
