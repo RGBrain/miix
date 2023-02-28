@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
@@ -58,7 +57,10 @@ function App() {
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("userName", userName);
     }
-    displayUser();
+
+    if (token) {
+      displayUser();
+    }
   }, []);
 
   // Removes the user's access token from local storage, logging them out
@@ -88,21 +90,11 @@ function App() {
     setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
-  const playTrack = (trackId, token) => {
-    console.log("Play track");
-    console.log(trackId);
-    ReactDOM.render(
-      <React.Fragment>
-        <SpotifyPlayer
-          token={token}
-          // Need to pass in a playlist id into context_url
-          // context_uri={INSERT PLAYLIST ID}
-          uris={`spotify:track:${trackId}`}
-          autoPlay="true"
-        />
-      </React.Fragment>,
-      document.querySelector("#player")
-    );
+  const savePlaylist = async (e) => {
+    e.preventDefault();
+
+    //POST request
+    //await savePlaylist()
   };
 
   return (
@@ -135,17 +127,29 @@ function App() {
               <p className="login">Please login</p>
             )}
             <div>
-              <div id="player">
-                {token && playlist && playlist.length > 0 ? (
-                  <SpotifyPlayer
-                    token={token}
-                    uris={playlist.map((item) => `spotify:track:${item.id}`)}
-                    autoPlay="true"
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
+              {token && playlist && playlist.length > 0 ? (
+                <div id="player" class="container display-flex">
+                  <div class="row">
+                    <div class="col-9">
+                      <SpotifyPlayer
+                        token={token}
+                        uris={playlist.map(
+                          (item) => `spotify:track:${item.id}`
+                        )}
+                        //autoPlay="true"
+                      />
+                    </div>
+                    <div class="col-3">
+                      <button className="songBtn" onClick={savePlaylist}>
+                        <span className="songBtnText">Save playlist</span>
+                        <FontAwesomeIcon icon={faSpotify} class="songIcon" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
               {token ? RenderPlaylist(playlist, token) : ""}
             </div>
           </div>
