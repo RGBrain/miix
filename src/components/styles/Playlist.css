@@ -24,17 +24,21 @@
 
 .songBtn {
   border: none !important;
-  background-color: black;
+  background-color: #28a745 !important;
   display: inline-flex !important;
   align-items: flex-start !important;
-  margin-top: 0 !important;
+  margin-top: 15px !important;
+  color: black !important;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 20px;
 }
 
 .songLink {
-  color: #28a745 !important;
   font-size: 50px !important;
 }
 
-.fa-spotify:hover {
-  color: white;
+.songBtn:hover {
+  background-color: white !important;
+  color: #28a745 !important;
 }

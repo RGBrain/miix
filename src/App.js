@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+import SpotifyPlayer from "react-spotify-web-playback";
 
 import Navigation from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -9,6 +10,7 @@ import About from "./components/About";
 import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
+import { getUser, createPlaylist } from "./utils/SpotifyApi";
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 
 // const App = (props) => {
@@ -20,11 +22,11 @@ function App() {
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope =
-    "user-top-read playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
+    "user-top-read playlist-modify-private playlist-modify-public streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
 
   // Token needed for Oauth
   const [token, setToken] = useState("");
-  //const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [playlist, setPlaylist] = useState([]);
 
@@ -47,22 +49,29 @@ function App() {
 
     async function displayUser() {
       const user = await getUser(token);
-      console.log(user);
+      if (!user) {
+        logout();
+      } else {
+        console.log(user);
 
-      const userId = user.id;
-      const userName = user.display_name;
-      //setUserId(userId);
-      setUserName(userName);
-      window.localStorage.setItem("userId", userId);
-      window.localStorage.setItem("userName", userName);
+        const userId = user.id;
+        const userName = user.display_name;
+        setUserId(userId);
+        setUserName(userName);
+        window.localStorage.setItem("userId", userId);
+        window.localStorage.setItem("userName", userName);
+      }
     }
-    displayUser();
+
+    if (token) {
+      displayUser();
+    }
   }, []);
 
   // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
-    //setUserId("");
+    setUserId("");
     setUserName("");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("userId");
@@ -70,20 +79,23 @@ function App() {
     window.localStorage.removeItem("playlist");
   };
 
-  // Move to SpotifyApi
-  const getUser = async (token) => {
-    const { data } = await axios.get("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    return data;
-  };
-
   const getTracks = async (e) => {
     e.preventDefault();
 
     // Display recommended songs as the current playlist
     setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
+  };
+
+  const savePlaylist = async (e) => {
+    e.preventDefault();
+
+    const playlistName = `Miix recommendations ${format(
+      new Date(),
+      "dd/MM/yyyy HH:mm"
+    )}`;
+    await createPlaylist(token, userId, playlistName, playlist);
+
+    //Display something on screen saying it's been saved
   };
 
   return (
@@ -94,29 +106,58 @@ function App() {
       <header className="Miix-header">
         {!token ? (
           <div>
-            <h2 className="login">Please login</h2>
+            <h2 className="login">Please login to Spotify</h2>
             <a
               href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
               className="login-link"
+              id="spotify-login"
             >
-              <FontAwesomeIcon icon={faSpotify} />
+              <FontAwesomeIcon icon={faSpotify} className="spotifyIcon" />
             </a>
           </div>
         ) : (
           <div className="btn-div col-lg-12 col-md-12 col-sm-12">
             <h1 className="user-greeting">Hello {userName}!</h1>
             <button onClick={logout} className="logoutBtn">
-              Logout
+              Logout <FontAwesomeIcon icon={faSpotify} className="songIcon" />
             </button>
             {token ? (
               <button onClick={getTracks} className="get-tracks-btn">
-                Get tracks
+                Get tracks{" "}
+                <FontAwesomeIcon icon={faSpotify} className="songIcon" />
               </button>
             ) : (
               <p className="login">Please login</p>
             )}
             <div>
-              <div id="player"></div>
+              {token && playlist && playlist.length > 0 ? (
+                <div id="player" className="container">
+                  <div className="row spotifyPlayerDiv">
+                    <div className="col-lg-9 col-sm-12">
+                      <SpotifyPlayer
+                        token={token}
+                        uris={playlist.map(
+                          (item) => `spotify:track:${item.id}`
+                        )}
+                        autoPlay="true"
+                      />
+                    </div>
+                    <div className="col-lg-3 col-sm-12">
+                      <button className="songBtn" onClick={savePlaylist}>
+                        <span className="songBtnText">
+                          Save playlist{" "}
+                          <FontAwesomeIcon
+                            icon={faSpotify}
+                            className="songIcon"
+                          />
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
               {token ? RenderPlaylist(playlist, token) : ""}
             </div>
           </div>
