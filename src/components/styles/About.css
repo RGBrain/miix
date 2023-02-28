@@ -5,8 +5,6 @@
 
 h2 {
     font-size: 30px !important;
-    /* text-shadow: 100px red !important; */
-    /* font-weight: lighter !important; */
 }
 
 .row {
@@ -25,9 +23,6 @@ h2 {
 
 }
 
-#headingOne {
-    /* background-color: black; */
-}
 
 #aboutBtn {
     color: var(--white);
