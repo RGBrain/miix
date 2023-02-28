@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+import SpotifyPlayer from "react-spotify-web-playback";
 
 import Navigation from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -14,9 +16,9 @@ import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  //const redirectURI = "http://localhost:3000";
+  const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  //const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope =
@@ -86,6 +88,23 @@ function App() {
     setPlaylist(await getRecommendedSongsFromCombinedTopTracks(token));
   };
 
+  const playTrack = (trackId, token) => {
+    console.log("Play track");
+    console.log(trackId);
+    ReactDOM.render(
+      <React.Fragment>
+        <SpotifyPlayer
+          token={token}
+          // Need to pass in a playlist id into context_url
+          // context_uri={INSERT PLAYLIST ID}
+          uris={`spotify:track:${trackId}`}
+          autoPlay="true"
+        />
+      </React.Fragment>,
+      document.querySelector("#player")
+    );
+  };
+
   return (
     <div className="App">
       <Navigation />
@@ -116,7 +135,17 @@ function App() {
               <p className="login">Please login</p>
             )}
             <div>
-              <div id="player"></div>
+              <div id="player">
+                {token && playlist && playlist.length > 0 ? (
+                  <SpotifyPlayer
+                    token={token}
+                    uris={playlist.map((item) => `spotify:track:${item.id}`)}
+                    autoPlay="true"
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
               {token ? RenderPlaylist(playlist, token) : ""}
             </div>
           </div>
