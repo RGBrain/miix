@@ -1,15 +1,17 @@
 :root {
-    --green: #1DB954;
-    --white: white;
+  --green: #1db954;
+  --white: white;
 }
 
 h2 {
     font-size: 30px !important;
+
 }
 
 .row {
-    justify-content: center;
+  justify-content: center;
 }
+
 
 .container-about  {
     background-image: url(../assets/white-background.jpg);
@@ -19,25 +21,34 @@ h2 {
 }
 
 .row {
-    padding-top: 50px;
+  padding-top: 50px;
+}
 
+
+#headingOne {
+  background-color: black;
 }
 
 
 #aboutBtn {
-    color: var(--white);
-    font-weight: 900;
-    box-shadow: none;
+  color: var(--white);
+  font-weight: 900;
+  box-shadow: none;
 }
 
 #aboutBtn:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 #aboutBtn:visited {
-    text-decoration: none;
+  text-decoration: none;
 }
+
 
 .collapse {
     background-color: white;
+}
+
+.how-it-works-text {
+  margin-left: 12px;
 }

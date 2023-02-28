@@ -1,6 +1,6 @@
 :root {
-    --green: #1DB954;
-    --white: white;
+  --green: #1db954;
+  --white: white;
 }
 
 .jumbotron {
@@ -8,22 +8,20 @@
     position: relative;
     overflow: hidden;
     z-index: 5;
-    /* background-color: #121212 !important; */
     background-color: transparent;
     padding: 2rem, 0rem;
 }
 
 #hero-btn {
-    background-color: var(--green) !important;
-    border: var(--green) !important;
-    color: black !important;
-    z-index: 5;
-
+  background-color: var(--green) !important;
+  border: var(--green) !important;
+  color: black !important;
+  z-index: 5;
 }
 
 #hero-btn:hover {
-    background-color: var(--white) !important;
-    color: var(--green) !important;
+  background-color: var(--white) !important;
+  color: var(--green) !important;
 }
 
 .jumbotron video {
@@ -41,3 +39,4 @@
   .video-background {
     height: 485px;
   }
+

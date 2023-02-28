@@ -1,6 +1,21 @@
 import axios from "axios";
 import shuffleArray from "./shuffleArray";
 
+// Retrieves full information of the logged in user
+const getUser = async (token) => {
+  const { data } = await axios
+    .get("https://api.spotify.com/v1/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .catch(function (error) {
+      if (error.response && error.response.status === 401) {
+        return false;
+      }
+    });
+
+  return data;
+};
+
 // Making API call to get user top 20 tracks
 const getTopSongs = async (token) => {
   const { data } = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
@@ -40,24 +55,34 @@ const getRecommendedSongs = async (playlist, token) => {
   return songs;
 };
 
-//Thinking about post API call
-// const postPlaylist = async (token, userId) => {
-//   const { data } = await axios.get(
-//     "https://api.spotify.com/v1/users/{userId}/playlists",
-//     {
-//       headers: { Authorization: `Bearer ${token}` },
-//       params: { name: "Miix recommendations" },
-//     }
-//   );
-//   console.log("Response");
-//   console.log(data);
+// API call to post data to spotify
+const createPlaylist = async (token, userId, name, playlist) => {
+  const playlistIds = playlist.map((song) => `spotify:track:${song.id}`);
 
-//   const songs = mapSongs(data.items);
-//   console.log("Top songs");
-//   console.log(songs);
+  const { data: playlistData } = await axios.post(
+    `https://api.spotify.com/v1/users/${userId}/playlists`,
+    { name: name },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  console.log("playlistData");
+  console.log(playlistData);
 
-//   return songs;
-// };
+  const playlistId = playlistData.id;
+
+  const { data: playlistTracksData } = await axios.post(
+    `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
+    { uris: playlistIds },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  console.log("playlistTracksData");
+  console.log(playlistTracksData);
+
+  return playlistId;
+};
 
 const mapSongs = (spotifyItems) => {
   return spotifyItems.map((spotifyItem) => {
@@ -71,4 +96,4 @@ const mapSongs = (spotifyItems) => {
   });
 };
 
-export { getTopSongs, getRecommendedSongs };
+export { getUser, getTopSongs, getRecommendedSongs, createPlaylist };
