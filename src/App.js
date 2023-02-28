@@ -111,7 +111,7 @@ function App() {
               href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
               className="login-link"
             >
-              <FontAwesomeIcon icon={faSpotify} />
+              <FontAwesomeIcon icon={faSpotify} className="spotifyIcon" />
             </a>
           </div>
         ) : (
@@ -130,9 +130,9 @@ function App() {
             )}
             <div>
               {token && playlist && playlist.length > 0 ? (
-                <div id="player" className="container display-flex">
-                  <div className="row">
-                    <div className="col-9">
+                <div id="player" className="container">
+                  <div className="row spotifyPlayerDiv">
+                    <div className="col-lg-9 col-sm-12">
                       <SpotifyPlayer
                         token={token}
                         uris={playlist.map(
@@ -141,7 +141,7 @@ function App() {
                         autoPlay="true"
                       />
                     </div>
-                    <div className="col-3">
+                    <div className="col-lg-3 col-sm-12">
                       <button className="songBtn" onClick={savePlaylist}>
                         <span className="songBtnText">
                           Save playlist{" "}
