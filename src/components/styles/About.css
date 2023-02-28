@@ -46,10 +46,16 @@ h2 {
 }
 
 
-/* .collapse {
-    background-color: white;
-} */
+.collapse {
+  background-color: white;
+}
 
 .how-it-works-text {
   margin-left: 12px;
+  color: black;
+}
+
+#dropdown {
+  padding: 0px;
+  border: white;
 }
