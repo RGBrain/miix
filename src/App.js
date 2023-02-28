@@ -89,7 +89,7 @@ function App() {
   const savePlaylist = async (e) => {
     e.preventDefault();
 
-    const playlistName = `Miix recommendations ${format(
+    const playlistName = `miix recommendations ${format(
       new Date(),
       "dd/MM/yyyy HH:mm"
     )}`;
@@ -110,6 +110,7 @@ function App() {
             <a
               href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
               className="login-link"
+              id="spotify-login"
             >
               <FontAwesomeIcon icon={faSpotify} className="spotifyIcon" />
             </a>

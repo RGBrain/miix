@@ -55,6 +55,7 @@ const getRecommendedSongs = async (playlist, token) => {
   return songs;
 };
 
+// API call to post data to spotify
 const createPlaylist = async (token, userId, name, playlist) => {
   const playlistIds = playlist.map((song) => `spotify:track:${song.id}`);
 

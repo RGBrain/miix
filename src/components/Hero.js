@@ -16,7 +16,7 @@ function Hero() {
         <a
           className="btn btn-primary btn-lg"
           id="hero-btn"
-          href="get-started"
+          href="#spotify-login"
           role="button"
         >
           Get started <FontAwesomeIcon icon={faSpotify} />
