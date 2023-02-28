@@ -1,6 +1,8 @@
 import React from "react";
 import "./styles/Hero.css";
 import Video from "./assets/Hero-vid.mp4";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 function Hero() {
   return (
@@ -17,7 +19,7 @@ function Hero() {
           href="get-started"
           role="button"
         >
-          Get started
+          Get started <FontAwesomeIcon icon={faSpotify} />
         </a>
       </p>
     </div>

@@ -106,7 +106,7 @@ function App() {
       <header className="Miix-header">
         {!token ? (
           <div>
-            <h2 className="login">Please login</h2>
+            <h2 className="login">Please login to Spotify</h2>
             <a
               href={`${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}&show_dialog=true`}
               className="login-link"
