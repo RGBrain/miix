@@ -1,0 +1,21 @@
+:root {
+    --green: #1db954;
+    --white: white;
+    --black: black;
+  }
+  
+footer {
+    text-align: center;
+    color: var(--white);
+    padding: 20px 0px 10px 0px;
+    background-color: var(--black);
+}
+
+a {
+    color: var(--white) !important;
+}
+
+a:hover {
+    color: var(--green);
+    text-decoration: none !important;
+}

@@ -8,7 +8,7 @@ function About() {
       <div className="row">
         <div className="col-lg-10 col-md-12 col-sm-12">
           <div id="accordion">
-            <div className="card">
+            <div className="card" id="dropdown">
               <div className="card-header" id="headingOne">
                 <h5 className="mb-0">
                   <button
