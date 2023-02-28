@@ -30,21 +30,24 @@ function About() {
                 aria-labelledby="headingOne"
                 data-parent="#accordion"
               >
-                <div className="card-body">
-                  Log in to Spotify to give us permission to access your data
-                  and log out. <br></br>
-                  <br></br>Get friends and family to log in and log out so we
-                  can combine their data with yours. Click on the 'get tracks'
-                  button. This will retrieve the top tracks that each person has
-                  listened to and mix them up! <br></br>
-                  <br></br>You will be provided with a playlist of music
-                  recommendations tailored to your tastes. Hit the 'save
-                  playlist' button to save a playlist to your Spotify account as
-                  a public playlist which friends and family can access.{" "}
-                  <br></br>
+                <div className="card-body how-it-works-text">
+                  Log in to Spotify via our app to allow us to access your data,
+                  then log out. <br></br>
+                  <br></br>Get friends or family members in your group to do the
+                  same. We can then combine their data with yours. Click on the
+                  'get tracks' button. This will retrieve each person's most
+                  listened to tracks and mix them up! <br></br>
+                  <br></br>The app uses this combined list to recommend a
+                  playlist of songs you might enjoy based on your group's
+                  previous listening history. Hit the 'save playlist' button to
+                  save a playlist to your Spotify account which friends and
+                  family can access publicly. The playlist will be called "miix
+                  recommendations" and include the time and date that it was
+                  generated in the title. <br></br>
                   <br></br>If you'd like a different playlist hit 'get tracks'
                   again and a new list will appear. You can also play the
-                  playlist directly from the app if you prefer.
+                  playlist directly from the app if you prefer on the spotify
+                  player.
                 </div>
               </div>
             </div>

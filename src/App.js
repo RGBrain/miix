@@ -16,9 +16,9 @@ import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 // const App = (props) => {
 function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
-  const redirectURI = "http://localhost:3000";
+  //const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  //const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://deft-haupia-213070.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope =
