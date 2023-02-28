@@ -89,7 +89,7 @@ function App() {
   const savePlaylist = async (e) => {
     e.preventDefault();
 
-    const playlistName = `miix recommendations ${format(
+    const playlistName = `Miix recommendations ${format(
       new Date(),
       "dd/MM/yyyy HH:mm"
     )}`;
