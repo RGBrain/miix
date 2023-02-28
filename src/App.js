@@ -118,11 +118,12 @@ function App() {
           <div className="btn-div col-lg-12 col-md-12 col-sm-12">
             <h1 className="user-greeting">Hello {userName}!</h1>
             <button onClick={logout} className="logoutBtn">
-              Logout
+              Logout <FontAwesomeIcon icon={faSpotify} className="songIcon" />
             </button>
             {token ? (
               <button onClick={getTracks} className="get-tracks-btn">
-                Get tracks
+                Get tracks{" "}
+                <FontAwesomeIcon icon={faSpotify} className="songIcon" />
               </button>
             ) : (
               <p className="login">Please login</p>
@@ -142,11 +143,13 @@ function App() {
                     </div>
                     <div className="col-3">
                       <button className="songBtn" onClick={savePlaylist}>
-                        <span className="songBtnText">Save playlist</span>
-                        <FontAwesomeIcon
-                          icon={faSpotify}
-                          className="songIcon"
-                        />
+                        <span className="songBtnText">
+                          Save playlist{" "}
+                          <FontAwesomeIcon
+                            icon={faSpotify}
+                            className="songIcon"
+                          />
+                        </span>
                       </button>
                     </div>
                   </div>
