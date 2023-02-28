@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import SpotifyPlayer from "react-spotify-web-playback";
@@ -10,6 +10,7 @@ import About from "./components/About";
 import "./App.css";
 import RenderPlaylist from "./components/RenderPlaylist";
 import Footer from "./components/Footer";
+import { getUser, createPlaylist } from "./utils/SpotifyApi";
 import getRecommendedSongsFromCombinedTopTracks from "./utils/playlistService";
 
 // const App = (props) => {
@@ -21,11 +22,11 @@ function App() {
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope =
-    "user-top-read playlist-modify-private streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
+    "user-top-read playlist-modify-private playlist-modify-public streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state user-library-read user-library-modify";
 
   // Token needed for Oauth
   const [token, setToken] = useState("");
-  //const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [playlist, setPlaylist] = useState([]);
 
@@ -48,14 +49,18 @@ function App() {
 
     async function displayUser() {
       const user = await getUser(token);
-      console.log(user);
+      if (!user) {
+        logout();
+      } else {
+        console.log(user);
 
-      const userId = user.id;
-      const userName = user.display_name;
-      //setUserId(userId);
-      setUserName(userName);
-      window.localStorage.setItem("userId", userId);
-      window.localStorage.setItem("userName", userName);
+        const userId = user.id;
+        const userName = user.display_name;
+        setUserId(userId);
+        setUserName(userName);
+        window.localStorage.setItem("userId", userId);
+        window.localStorage.setItem("userName", userName);
+      }
     }
 
     if (token) {
@@ -66,21 +71,12 @@ function App() {
   // Removes the user's access token from local storage, logging them out
   const logout = () => {
     setToken("");
-    //setUserId("");
+    setUserId("");
     setUserName("");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("userId");
     window.localStorage.removeItem("userName");
     window.localStorage.removeItem("playlist");
-  };
-
-  // Move to SpotifyApi
-  const getUser = async (token) => {
-    const { data } = await axios.get("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    return data;
   };
 
   const getTracks = async (e) => {
@@ -93,8 +89,13 @@ function App() {
   const savePlaylist = async (e) => {
     e.preventDefault();
 
-    //POST request
-    //await savePlaylist()
+    const playlistName = `Miix recommendations ${format(
+      new Date(),
+      "dd/MM/yyyy HH:mm"
+    )}`;
+    await createPlaylist(token, userId, playlistName, playlist);
+
+    //Display something on screen saying it's been saved
   };
 
   return (
@@ -128,21 +129,24 @@ function App() {
             )}
             <div>
               {token && playlist && playlist.length > 0 ? (
-                <div id="player" class="container display-flex">
-                  <div class="row">
-                    <div class="col-9">
+                <div id="player" className="container display-flex">
+                  <div className="row">
+                    <div className="col-9">
                       <SpotifyPlayer
                         token={token}
                         uris={playlist.map(
                           (item) => `spotify:track:${item.id}`
                         )}
-                        //autoPlay="true"
+                        autoPlay="true"
                       />
                     </div>
-                    <div class="col-3">
+                    <div className="col-3">
                       <button className="songBtn" onClick={savePlaylist}>
                         <span className="songBtnText">Save playlist</span>
-                        <FontAwesomeIcon icon={faSpotify} class="songIcon" />
+                        <FontAwesomeIcon
+                          icon={faSpotify}
+                          className="songIcon"
+                        />
                       </button>
                     </div>
                   </div>
