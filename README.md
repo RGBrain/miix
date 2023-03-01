@@ -38,6 +38,10 @@ This web app is only available to Spotify Premium customers. Simply visit **http
 
 On arrival to the homepage, each friend/ family member should log in to Spotify via our login button and click the 'get tracks' button, then log out. A playlist will render each time you click 'get tracks' based on your listening history. After the last person to use the app has clicked 'get tracks' you'll be presented with a playlist which takes into account everyone's music tastes. You can play this in the Spotify player on the page or hit the 'save' button to save it to your Spotify account as a public playlist. Friends and family members will be able to access this if they wish. The playlist will be named 'miix recommendations' and include the date and time in the name as a unique reference.
 
+Click on the link below for a short demo of how the app works.
+
+[miix demo](https://drive.google.com/file/d/1z2zxKU1Q5vTriKkSBNAWYwX3W4aSHuQP/view)
+
 **SCREENSHOT**
 
 ![Project Screenshot](/public/screenshot.png)
