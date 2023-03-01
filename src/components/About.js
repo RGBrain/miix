@@ -32,16 +32,18 @@ function About() {
               >
                 <div className="card-body how-it-works-text">
                   Log in to Spotify via our app to allow us to access your data,
-                  then log out. <br></br>
+                  click the 'get tracks' button to retrieve each person's most
+                  listened to tracks, then log out. <br></br>
                   <br></br>Get friends or family members in your group to do the
-                  same. We can then combine their data with yours. Click on the
-                  'get tracks' button. This will retrieve each person's most
-                  listened to tracks and mix them up! <br></br>
+                  same. The last person to use the app stays logged in. We'll
+                  combine everyone's data. Click on the 'get tracks' button one
+                  last time. This will combine all of the most listened to
+                  tracks and mix them up! <br></br>
                   <br></br>The app uses this combined list to recommend a
                   playlist of songs you might enjoy based on your group's
-                  previous listening history. Hit the 'save playlist' button to
-                  save a playlist to your Spotify account which friends and
-                  family can access publicly. The playlist will be called "miix
+                  listening history. Hit the 'save playlist' button to save a
+                  playlist to your Spotify account which friends and family can
+                  access publicly. The playlist will be called "miix
                   recommendations" and include the time and date that it was
                   generated in the title. <br></br>
                   <br></br>If you'd like a different playlist hit 'get tracks'
