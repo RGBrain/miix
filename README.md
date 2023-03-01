@@ -6,7 +6,7 @@
 
 Miix is a web application where multiple Spotify users can log-in concurrently and a combined playlist is created based on their combined musical tastes.
 
-The built-in player allows users to play their new playlist, and it can also be saved to the users Spotify account.
+The built-in player allows users to play their new playlist, and it can also be saved to the user's Spotify account.
 
 The app achieves this by making an API call to Spotify to retrieve each person's 20 most listened to tracks. The tracks are combined and 5 are randomly selected to feed another API call which retrieves a list of 10 track recommendations from Spotify. These recommendations render as a playlist on the webpage and can be played on the Spotify player.
 
@@ -48,7 +48,7 @@ With thanks to Dom the dev for providing a tutorial which helped us get started 
 
 [Spotify React tutorial](https://www.youtube.com/watch?v=wBq3HCvYfUg/ "Check out the tutorial")
 
-Images were sourced from Pexels.
+The background image and vinyl video were sourced from Pexels.
 
 ## Contribution
 
