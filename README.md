@@ -84,7 +84,7 @@ We plan to implement unit testing in due course. As users, we have tested the si
 If you have any questions, please contact a member of the development team:<p/>
 Richard Brain - richard.brain@hotmail.co.uk<br />
 Naomi Winchurch - naomi.winchurch@hotmail.co.uk<br />
-Sarah Osbourne - EMAIL ADDRESS
+Sarah Osbourne - sarahlosbourne@gmail.com
 
 ## License
 
