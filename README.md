@@ -8,7 +8,7 @@ Miix is a web application where multiple Spotify users can log-in concurrently a
 
 The built-in player allows users to play their new playlist, and it can also be saved to the users Spotify account.
 
-The app achieves this by making an API call to Spotify to retrieve each person's 20 most listened to tracks. This data is then combined and 5 tracks are randomly selected to feed into another API call to Spotify to retrieve a list of 10 track recommendations which render as a playlist on the webpage and in the Spotify player.
+The app achieves this by making an API call to Spotify to retrieve each person's 20 most listened to tracks. The tracks are combined and 5 are randomly selected to feed another API call which retrieves a list of 10 track recommendations from Spotify. These recommendations render as a playlist on the webpage and can be played on the Spotify player.
 
 If the user decides to save the playlist, a post API request is sent to Spotify to publish the playlist on the user's account.
 
@@ -42,13 +42,21 @@ On arrival to the homepage, each friend/ family member should log in to Spotify 
 
 ![Project Screenshot](/public/screenshot.png)
 
+## Credits
+
+With thanks to Dom the dev for providing a tutorial which helped us get started with using the Spotify API in React.
+
+[Spotify React tutorial](https://www.youtube.com/watch?v=wBq3HCvYfUg/ "Check out the tutorial")
+
+Images were sourced from Pexels.
+
 ## Contribution
 
 We are using the MIT license, and welcome contributions. We do have future development goals, such as adding additional options/filters. Please get in touch if you would like to get involved.
 
 ## Testing
 
-We have tested the site extensively, and so don't foresee you experiencing any difficulty. If you do have any problems then please raise a GitHub issue so that we can address them. We plan to implement unit testing in due course.
+We plan to implement unit testing in due course. As users, we have tested the site extensively, and don't foresee you experiencing any difficulty. If you do have any problems then please raise a GitHub issue so that we can address them.
 
 ## Questions
 
