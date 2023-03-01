@@ -42,9 +42,26 @@ Click on the link below for a short demo of how the app works.
 
 [miix demo](https://drive.google.com/file/d/1z2zxKU1Q5vTriKkSBNAWYwX3W4aSHuQP/view)
 
-**SCREENSHOT**
+The screeenshots below show how miix works.
 
-![Project Screenshot](/public/screenshot.png)
+**miix in desktop view**
+
+![Project Screenshot](/public/images/Miix-desktop-landing-page-view.jpeg)
+
+**miix in mobile view**
+
+![Project Screenshot](/public/images/Miix-mobile-landing-page-view.jpeg)
+
+**miix recommended tracks in desktop view**
+
+![Project Screenshot](/public/images/Miix-desktop-recommended-tracks-view.jpeg)
+
+**miix recommended tracks in mobile view**
+
+![Project Screenshot](/public/images/Miix-mobile-recommended-tracks-view.jpeg)
+
+**miix recommended tracks posted to Spotify user account**
+![Project Screenshot](/public/images/Miix-playlist-posted-to-spotify-user-account.jpg)
 
 ## Credits
 
