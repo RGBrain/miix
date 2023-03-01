@@ -7,7 +7,11 @@
   color: black !important;
 }
 
-a:hover {
+a.nav-link.spacer {
+  color: black !important;
+}
+
+a.nav-link.spacer:hover {
   color: var(--green) !important;
 }
 
