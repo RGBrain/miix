@@ -18,7 +18,7 @@ function App() {
   const clientID = "a9911275aba546e082be4ac4a0704f39";
   // const redirectURI = "http://localhost:3000";
   //Uncomment before deploying
-  const redirectURI = "https://deft-haupia-213070.netlify.app";
+  const redirectURI = "https://monumental-fox-727f1d.netlify.app";
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const responseType = "token";
   const scope =
